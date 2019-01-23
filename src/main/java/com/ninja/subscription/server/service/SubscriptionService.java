@@ -9,4 +9,5 @@ public interface SubscriptionService {
     Subscription getByID(long id);
     Subscription save(Subscription Subscription);
     void remove(long id);
+    Subscription error();
 }

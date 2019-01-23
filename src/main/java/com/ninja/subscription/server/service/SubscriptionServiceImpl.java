@@ -31,4 +31,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     public void remove(long id) {
         subRepository.delete(id);
     }
+
+    public Subscription error() {
+        Subscription sub=new Subscription();
+        sub.setDescription("Error");
+        sub.setId(1);
+        sub.setPrice(0);
+        sub.setUserId(1);
+        return sub;
+    }
 }
