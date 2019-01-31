@@ -37,7 +37,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         sub.setDescription("Error");
         sub.setId(1);
         sub.setPrice(0);
-        sub.setUserId(1);
+        sub.setUserId("1");
         return sub;
     }
 }

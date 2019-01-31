@@ -18,7 +18,7 @@ public class Subscription {
     private int id;
 
     @Column(name = "userid", nullable = false)
-    private int userId;
+    private String userId;
 
     @Column(name = "instructorid", nullable = false)
     private int instructorId;
@@ -45,11 +45,11 @@ public class Subscription {
         this.id = id;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

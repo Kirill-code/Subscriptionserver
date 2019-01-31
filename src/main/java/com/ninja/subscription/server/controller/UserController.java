@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Logger;
 
+import static java.lang.Boolean.*;
+
 @RestController
 public class UserController {
 
@@ -23,7 +25,7 @@ public class UserController {
         boolean result;
         try {
             decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
-            System.out.println(decodedToken.getClaims());
+
             log.info(decodedToken.getEmail() + " logged at " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
             result = true;
         } catch (FirebaseAuthException e) {
@@ -45,20 +47,19 @@ public class UserController {
                 ListUsersPage page = FirebaseAuth.getInstance().listUsers(null);
                 while (page != null) {
                     for (ExportedUserRecord user : page.getValues()) {
-                        boolean claim=Boolean.valueOf(user.getCustomClaims().get("testad").toString());
-                        list.add(new User(user.getUid(), user.getEmail(),claim));
+                        list.add(new User(user.getUid(), user.getEmail()));
                     }
                     page = page.getNextPage();
                 }
             } catch (FirebaseAuthException e) {
                 e.printStackTrace();
-                list.add(new User("Auth","Error",false));
+                list.add(new User("Auth","Error"));
             }
             log.info(" Users list sent " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
 
         } else {
 
-            list.add(new User("Auth","Error",false));
+            list.add(new User("Auth","Error"));
 
         }
 
@@ -67,21 +68,30 @@ public class UserController {
     }
     @RequestMapping(value = "/adminclaim", method = RequestMethod.POST)
     @ResponseBody
-    public void setAdminClaim(@RequestHeader("token") String idToken, @RequestHeader("uid") String uid) throws FirebaseAuthException {
-        List<User> list = new ArrayList<>();
+    public User setAdminClaim(@RequestHeader("token") String idToken, @RequestHeader("uid") String uid) throws FirebaseAuthException {
+        User resUser;
         if (checkUsers(idToken)) {
-            System.out.println(FirebaseAuth.getInstance().getUser(uid).getCustomClaims());
             Map<String, Object> claims = new HashMap<>();
             claims.put("admin", true);
-            try {
-                FirebaseAuth.getInstance().setCustomUserClaims(uid, claims);
-                System.out.println("Success");
 
+            try {
                 UserRecord user = FirebaseAuth.getInstance().getUser(uid);
-                System.out.println(user.getCustomClaims().get("admin"));
+                System.out.println(user.getEmail()+" Have it ?");
+                if (Boolean.TRUE.equals(user.getCustomClaims().get("admin"))) {
+                    System.out.println(" yes");
+                    resUser=new User("uid","unsuccess. User existed");
+                }else {
+                    System.out.println(" no");
+                    FirebaseAuth.getInstance().setCustomUserClaims(uid, claims);
+                    resUser=new User("uid","success");
+                    log.info(uid+" admnis rights assigned " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
+                }
             } catch (FirebaseAuthException e) {
                 e.printStackTrace();
+                resUser=new User("","wrong user");
             }
-        }
+        }else{
+        resUser=new User("","wrong user");}
+        return resUser;
     }
 }

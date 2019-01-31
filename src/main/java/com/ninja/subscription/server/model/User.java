@@ -2,22 +2,11 @@ package com.ninja.subscription.server.model;
 
 public class User {
     String uid,email;
-    boolean adminClaim;
 
-    public boolean getClaim() {
-        return adminClaim;
-    }
-
-    public void setClaim(boolean claim) {
-        this.adminClaim = claim;
-    }
-
-    public User(String uid, String email, boolean adminClaim) {
+    public User(String uid, String email) {
         this.uid = uid;
         this.email = email;
-        this.adminClaim=adminClaim;
     }
-
 
     public String getUid() {
         return uid;

@@ -12,8 +12,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAll() {
         List<User> list=new ArrayList<>();
-        list.add(new User("Test","Test",false));
-        list.add(new User("Test2","Test2",true));
+        list.add(new User("Test","Test"));
+        list.add(new User("Test2","Test2"));
 
         return list;
     }
@@ -21,6 +21,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User error() {
-        return new User("Error","Error",false);
+        return new User("Error","Error");
     }
 }

@@ -3,9 +3,9 @@ package com.ninja.subscription.server.controller;
 
 import com.google.firebase.auth.*;
 import com.ninja.subscription.server.model.Subscription;
-import com.ninja.subscription.server.model.User;
 import com.ninja.subscription.server.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
@@ -21,13 +21,6 @@ public class SubscriptionController {
     private SubscriptionService service;
 
     private static Logger log = Logger.getLogger(SubscriptionController.class.getName());
-
-
-    @RequestMapping(value = "/subscriptions", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Subscription> getAllSubscriptioners() {
-        return service.getAll();
-    }
 
     //?????????where put it????
     boolean checkUsers(String idToken) {
@@ -47,18 +40,11 @@ public class SubscriptionController {
         return result;
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
+
+@RequestMapping(value = "/subscriptions", method = RequestMethod.GET)
     @ResponseBody
-    public List<Subscription> getTest(@RequestHeader("token") String idToken) {
-        List<Subscription> list = new ArrayList<>();
-
-        if (checkUsers(idToken)) {
-            list = service.getAll();
-        } else {
-            list.add(service.error());
-        }
-
-        return list;
+    public List<Subscription> getAllSubscriptioners() {
+        return service.getAll();
     }
 
 
