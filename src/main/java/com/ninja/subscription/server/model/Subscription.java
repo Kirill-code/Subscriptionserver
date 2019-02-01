@@ -2,6 +2,7 @@ package com.ninja.subscription.server.model;
 
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,20 +11,21 @@ import java.util.List;
 
 
 @Entity
-@Table(name="subscription")
+@Table(name = "subscription")
+@Proxy(lazy = false)
 public class Subscription {
 
     @Id
     @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment",strategy = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "id")
-    private int id;
+    private long id;
 
     @Column(name = "userid", nullable = false)
     private String userId;
 
     @Column(name = "instructorid", nullable = false)
-    private int instructorId;
+    private long instructorId;
 
     @Column(name = "saledate", nullable = false)
     @Temporal(TemporalType.DATE)
@@ -34,20 +36,33 @@ public class Subscription {
     private Date finishDate;
 
     @Column(name = "price", nullable = false)
-    private int price;
+    private long price;
 
     @Column(name = "description", nullable = false)
     private String description;
 
-    @OneToMany
-    @JoinColumn(name = "subscriptionid")
-    private List<VisitDate> visitDates=new ArrayList<>();
 
-    public int getId() {
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "subscription")
+
+    private List<VisitDate> visitDates = new ArrayList<>();
+
+    /*********************
+     * Getters and Setters
+     * *******************/
+
+    public void setVisitDates(List<VisitDate> visitDates) {
+        this.visitDates = visitDates;
+    }
+
+    public List<VisitDate> getVisitDates() {
+        return visitDates;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -59,11 +74,11 @@ public class Subscription {
         this.userId = userId;
     }
 
-    public int getInstructorId() {
+    public long getInstructorId() {
         return instructorId;
     }
 
-    public void setInstructorId(int instructorId) {
+    public void setInstructorId(long instructorId) {
         this.instructorId = instructorId;
     }
 
@@ -83,11 +98,11 @@ public class Subscription {
         this.finishDate = finishDate;
     }
 
-    public int getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 

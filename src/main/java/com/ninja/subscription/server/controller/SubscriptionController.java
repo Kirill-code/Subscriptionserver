@@ -3,6 +3,7 @@ package com.ninja.subscription.server.controller;
 
 import com.google.firebase.auth.*;
 import com.ninja.subscription.server.model.Subscription;
+import com.ninja.subscription.server.model.VisitDate;
 import com.ninja.subscription.server.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -46,7 +47,11 @@ public class SubscriptionController {
     public List<Subscription> getAllSubscriptioners() {
         return service.getAll();
     }
-
+    @RequestMapping(value = "/alldates/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<VisitDate> getAllDates(@PathVariable("id") long id) {
+        return service.getDates(id);
+    }
 
     @RequestMapping(value = "/subscriptions/{id}", method = RequestMethod.GET)
     @ResponseBody

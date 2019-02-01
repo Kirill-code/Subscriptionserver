@@ -1,6 +1,7 @@
 package com.ninja.subscription.server.service;
 
 import com.ninja.subscription.server.model.Subscription;
+import com.ninja.subscription.server.model.VisitDate;
 import com.ninja.subscription.server.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,5 +40,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         sub.setPrice(0);
         sub.setUserId("1");
         return sub;
+    }
+
+    @Override
+    public List<VisitDate> getDates(long id) {
+        return subRepository.getOne(id).getVisitDates();
     }
 }
