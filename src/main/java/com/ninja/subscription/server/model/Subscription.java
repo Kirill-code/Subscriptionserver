@@ -4,7 +4,9 @@ package com.ninja.subscription.server.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -36,6 +38,10 @@ public class Subscription {
 
     @Column(name = "description", nullable = false)
     private String description;
+
+    @OneToMany
+    @JoinColumn(name = "subscriptionid")
+    private List<VisitDate> visitDates=new ArrayList<>();
 
     public int getId() {
         return id;

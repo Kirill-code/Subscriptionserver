@@ -23,10 +23,6 @@ public class VisitDate {
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "post_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Subscription subscription;
 
     public int getId() {
         return id;
