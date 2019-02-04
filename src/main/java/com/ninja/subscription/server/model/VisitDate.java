@@ -12,19 +12,19 @@ import java.util.Date;
 @Table(name="visitdate")
 
 public class VisitDate {
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment",strategy = "increment")
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
-    private long subscription;
 
-  /*  @Column(name = "subscriptionid", nullable = false)
-    private int subscriptionId;*/
 
     @Column(name = "date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date date;
+    @ManyToOne
+    @JoinColumn(name="subscription_id")
+    private Subscription associatedSub;
+
+
 
 
     public long getId() {
@@ -35,13 +35,6 @@ public class VisitDate {
         this.id = id;
     }
 
-/*    public int getSubscriptionId() {
-        return subscriptionId;
-    }
-
-    public void setSubscriptionId(int subscriptionId) {
-        this.subscriptionId = subscriptionId;
-    }*/
 
     public Date getDate() {
         return date;

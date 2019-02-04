@@ -47,7 +47,7 @@ public class SubscriptionController {
     public List<Subscription> getAllSubscriptioners() {
         return service.getAll();
     }
-    @RequestMapping(value = "/alldates/{id}", method = RequestMethod.GET)
+        @RequestMapping(value = "/alldates/{id}", method = RequestMethod.GET)
     @ResponseBody
     public List<VisitDate> getAllDates(@PathVariable("id") long id) {
         return service.getDates(id);

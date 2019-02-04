@@ -46,4 +46,5 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     public List<VisitDate> getDates(long id) {
         return subRepository.getOne(id).getVisitDates();
     }
+
 }

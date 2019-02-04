@@ -12,4 +12,5 @@ public interface SubscriptionService {
     void remove(long id);
     Subscription error();
     List<VisitDate> getDates(long id);
+
 }

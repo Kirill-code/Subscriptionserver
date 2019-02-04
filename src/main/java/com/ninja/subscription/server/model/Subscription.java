@@ -15,10 +15,8 @@ import java.util.List;
 @Proxy(lazy = false)
 public class Subscription {
 
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
-    @Column(name = "id")
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "subscription_id")
     private long id;
 
     @Column(name = "userid", nullable = false)
@@ -42,7 +40,7 @@ public class Subscription {
     private String description;
 
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "subscription")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "associatedSub")
 
     private List<VisitDate> visitDates = new ArrayList<>();
 

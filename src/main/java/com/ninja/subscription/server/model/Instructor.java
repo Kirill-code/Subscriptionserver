@@ -10,9 +10,7 @@ import javax.persistence.*;
 
 public class Instructor {
 
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment",strategy = "increment")
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
