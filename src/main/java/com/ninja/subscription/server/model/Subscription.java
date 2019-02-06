@@ -20,10 +20,10 @@ public class Subscription {
     private long id;
 
     @Column(name = "userid", nullable = false)
-    private String userId;
+    private String userid;
 
-    @Column(name = "instructorid", nullable = false)
-    private long instructorId;
+  /*  @Column(name = "instructorid", nullable = false)
+    private long instructorId;*/
 
     @Column(name = "saledate", nullable = false)
     @Temporal(TemporalType.DATE)
@@ -43,6 +43,26 @@ public class Subscription {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "associatedSub")
 
     private List<VisitDate> visitDates = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name="id")
+    private Instructor associatedInstructor;
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    public Instructor getAssociatedInstructor() {
+        return associatedInstructor;
+    }
+
+    public void setAssociatedInstructor(Instructor associatedInstructor) {
+        this.associatedInstructor = associatedInstructor;
+    }
 
     /*********************
      * Getters and Setters
@@ -65,20 +85,20 @@ public class Subscription {
     }
 
     public String getUserId() {
-        return userId;
+        return userid;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserId(String userid) {
+        this.userid = userid;
     }
 
-    public long getInstructorId() {
+  /*  public long getInstructorId() {
         return instructorId;
     }
 
     public void setInstructorId(long instructorId) {
         this.instructorId = instructorId;
-    }
+    }*/
 
     public Date getSaleDate() {
         return saleDate;

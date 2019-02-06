@@ -2,6 +2,7 @@ package com.ninja.subscription.server.controller;
 
 import com.google.firebase.auth.*;
 import com.ninja.subscription.server.model.User;
+import com.ninja.subscription.server.model.Utils;
 import com.ninja.subscription.server.service.SubscriptionService;
 import com.ninja.subscription.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,29 +20,13 @@ public class UserController {
 
     private static Logger log = Logger.getLogger(UserController.class.getName());
 
-    //?????????where put it????
-    boolean checkUsers(String idToken) {
-        FirebaseToken decodedToken = null;
-        boolean result;
-        try {
-            decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
-
-            log.info(decodedToken.getEmail() + " logged at " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
-            result = true;
-        } catch (FirebaseAuthException e) {
-            log.info("Auth error at " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
-
-            e.printStackTrace();
-            result = false;
-        }
-        return result;
-    }
+    Utils chcker=new Utils();
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     @ResponseBody
     public List<User> getUsers(@RequestHeader("token") String idToken) {
         List<User> list = new ArrayList<>();
-        if (checkUsers(idToken)) {
+        if (Boolean.TRUE.equals(chcker.checkUsers(idToken))) {
             // Start listing users from the beginning, 1000 at a time.
             try {
                 ListUsersPage page = FirebaseAuth.getInstance().listUsers(null);
@@ -70,7 +55,7 @@ public class UserController {
     @ResponseBody
     public User setAdminClaim(@RequestHeader("token") String idToken, @RequestHeader("uid") String uid) throws FirebaseAuthException {
         User resUser;
-        if (checkUsers(idToken)) {
+        if (Boolean.TRUE.equals(chcker.checkUsers(idToken))) {
             Map<String, Object> claims = new HashMap<>();
             claims.put("admin", true);
 

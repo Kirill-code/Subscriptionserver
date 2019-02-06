@@ -2,12 +2,15 @@ package com.ninja.subscription.server.model;
 
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="instructor")
-
+@Proxy(lazy = false)
 public class Instructor {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -19,6 +22,9 @@ public class Instructor {
 
     @Column(name = "surname", nullable = false)
     private String surname;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "associatedInstructor")
+    private List<Subscription> instructorSubscriptions= new ArrayList<>();
 
     public String getName() {
         return name;

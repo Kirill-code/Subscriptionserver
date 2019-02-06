@@ -47,4 +47,9 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         return subRepository.getOne(id).getVisitDates();
     }
 
+    @Override
+    public Subscription getByUid(String uid) {
+        return subRepository.findByUid(uid);
+    }
+
 }
