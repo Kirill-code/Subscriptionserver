@@ -54,6 +54,7 @@ public class UserController {
     @RequestMapping(value = "/adminclaim", method = RequestMethod.POST)
     @ResponseBody
     public User setAdminClaim(@RequestHeader("token") String idToken, @RequestHeader("uid") String uid) throws FirebaseAuthException {
+        //TODO go to AUTH interface
         User resUser;
         if (Boolean.TRUE.equals(chcker.checkUsers(idToken))) {
             Map<String, Object> claims = new HashMap<>();
@@ -61,7 +62,7 @@ public class UserController {
 
             try {
                 UserRecord user = FirebaseAuth.getInstance().getUser(uid);
-                System.out.println(user.getEmail()+" Have it ?");
+
                 if (Boolean.TRUE.equals(user.getCustomClaims().get("admin"))) {
                     System.out.println(" yes");
                     resUser=new User("uid","unsuccess. User existed");

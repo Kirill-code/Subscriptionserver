@@ -26,13 +26,14 @@ public class SubscriptionController {
     private static Logger log = Logger.getLogger(SubscriptionController.class.getName());
 
     Utils checker = new Utils();
-
+    //TODO check which methods delete
     @RequestMapping(value = "/subscriptions", method = RequestMethod.GET)
     @ResponseBody
     public List<Subscription> getAllSubscriptioners() {
         return service.getAll();
     }
-        @RequestMapping(value = "/alldates/{id}", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/alldates/{id}", method = RequestMethod.GET)
     @ResponseBody
     public List<VisitDate> getAllDates(@PathVariable("id") long id) {
         return service.getDates(id);
