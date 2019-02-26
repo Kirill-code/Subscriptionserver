@@ -1,6 +1,10 @@
 package com.ninja.subscription.server.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Proxy;
 
@@ -11,10 +15,11 @@ import java.util.List;
 @Entity
 @Table(name="instructor")
 @Proxy(lazy = false)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Instructor {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "instructor_id")
     private long id;
 
     @Column(name = "name", nullable = false)
@@ -23,8 +28,17 @@ public class Instructor {
     @Column(name = "surname", nullable = false)
     private String surname;
 
+    public List<Subscription> getInstructorSubscriptions() {
+        return instructorSubscriptions;
+    }
+
+    public void setInstructorSubscriptions(List<Subscription> instructorSubscriptions) {
+        this.instructorSubscriptions = instructorSubscriptions;
+    }
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "associatedInstructor")
     private List<Subscription> instructorSubscriptions= new ArrayList<>();
+
 
     public String getName() {
         return name;

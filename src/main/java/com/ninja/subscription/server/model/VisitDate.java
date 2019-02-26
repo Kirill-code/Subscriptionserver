@@ -1,5 +1,9 @@
 package com.ninja.subscription.server.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -20,10 +24,18 @@ public class VisitDate {
     @Column(name = "date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date date;
+
+    public Subscription getAssociatedSub() {
+        return associatedSub;
+    }
+
+    public void setAssociatedSub(Subscription associatedSub) {
+        this.associatedSub = associatedSub;
+    }
+
     @ManyToOne
     @JoinColumn(name="subscription_id")
     private Subscription associatedSub;
-
 
 
 

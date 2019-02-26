@@ -15,7 +15,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     public List<Subscription> getAll() {
-        return subRepository.findAll();
+        List<Subscription> list=subRepository.findAll();
+        return list;
     }
 
     @Override
