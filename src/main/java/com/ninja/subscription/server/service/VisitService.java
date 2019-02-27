@@ -10,4 +10,5 @@ public interface VisitService {
     VisitDate getByID(long id);
     VisitDate save(VisitDate visit);
     void remove(long id);
+
 }

@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "subscription")
 @Proxy(lazy = false)
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Subscription {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -27,8 +27,15 @@ public class Subscription {
     @Column(name = "userid", nullable = false)
     private String userid;
 
-  /*  @Column(name = "instructorid", nullable = false)
-    private long instructorId;*/
+    public Subscription(String userid, Date saleDate, Date finishDate, long price, String description, List<VisitDate> visitDates, Instructor associatedInstructor) {
+        this.userid = userid;
+        this.saleDate = saleDate;
+        this.finishDate = finishDate;
+        this.price = price;
+        this.description = description;
+        this.visitDates = visitDates;
+        this.associatedInstructor = associatedInstructor;
+    }
 
     @Column(name = "saledate", nullable = false)
     @Temporal(TemporalType.DATE)
@@ -52,8 +59,12 @@ public class Subscription {
     @JoinColumn(name="instructor_id")
     private Instructor associatedInstructor;
 
+
     public String getUserid() {
         return userid;
+    }
+
+    public Subscription() {
     }
 
     public void setUserid(String userid) {

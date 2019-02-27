@@ -17,7 +17,9 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public List<VisitDate> getAll() {
-        return visitRepository.findAll();
+        List<VisitDate> liss=visitRepository.findAll();
+
+        return liss;
     }
 
     @Override

@@ -2,15 +2,15 @@ package com.ninja.subscription.server.service;
 
 import com.ninja.subscription.server.model.Subscription;
 import com.ninja.subscription.server.model.VisitDate;
+import com.ninja.subscription.server.model.dto.SubscriptionDTO;
+import com.ninja.subscription.server.model.dto.VisitDateDTO;
 
 import java.util.List;
 
 public interface SubscriptionService {
-    List<Subscription> getAll();
-    Subscription getByID(long id);
+    //SubscriptionDTO getByID(long id);
     Subscription save(Subscription Subscription);
     void remove(long id);
-    Subscription error();
-    List<VisitDate> getDates(long id);
-    Subscription getByUid(String uid);
+    SubscriptionDTO getByUidDto(String uid);
+
 }

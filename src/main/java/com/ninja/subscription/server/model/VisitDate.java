@@ -37,7 +37,19 @@ public class VisitDate {
     @JoinColumn(name="subscription_id")
     private Subscription associatedSub;
 
+    public VisitDate(long id,Date date, Subscription associatedSub) {
+        this.id=id;
+        this.date = date;
+        this.associatedSub = associatedSub;
+    }
+    public VisitDate(Date date, Subscription associatedSub) {
 
+        this.date = date;
+        this.associatedSub = associatedSub;
+    }
+
+    public VisitDate() {
+    }
 
     public long getId() {
         return id;

@@ -5,6 +5,7 @@ import com.google.firebase.auth.*;
 import com.ninja.subscription.server.model.Subscription;
 import com.ninja.subscription.server.model.Utils;
 import com.ninja.subscription.server.model.VisitDate;
+import com.ninja.subscription.server.model.dto.SubscriptionDTO;
 import com.ninja.subscription.server.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,24 +28,22 @@ public class SubscriptionController {
 
     Utils checker = new Utils();
     //TODO check which methods delete
-    @RequestMapping(value = "/subscriptions", method = RequestMethod.GET)
+
+
+    @RequestMapping(value = "/uidsubscription/{uid}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Subscription> getAllSubscriptioners() {
-        return service.getAll();
+    public SubscriptionDTO getSubscriptioner(@PathVariable("uid") String SubscriptionUID) {
+        return service.getByUidDto(SubscriptionUID);
     }
 
-    @RequestMapping(value = "/alldates/{id}", method = RequestMethod.GET)
+    /*DELETE*/
+    @RequestMapping(value = "/subscriptions/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public List<VisitDate> getAllDates(@PathVariable("id") long id) {
-        return service.getDates(id);
+    public void delete(@PathVariable long id) {
+        service.remove(id);
     }
 
-    @RequestMapping(value = "/subscriptions/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public Subscription getSubscriptioner(@PathVariable("id") long SubscriptionID) {
-        return service.getByID(SubscriptionID);
-    }
-
+    /*GET BY UID*/  /*
     @RequestMapping(value = "/subscription/{uid}", method = RequestMethod.GET)
     @ResponseBody
     public Subscription getSubscriptionByUid(@PathVariable("uid") String uid,@RequestHeader("token") String idToken) {
@@ -53,17 +52,13 @@ public class SubscriptionController {
        else {
             return  service.error();
         }
-    }
-    @RequestMapping(value = "/subscriptions", method = RequestMethod.POST)
+    }*/
+    @RequestMapping(value = "/savesubscriptions", method = RequestMethod.POST)
     @ResponseBody
     public Subscription saveRemider(@RequestBody Subscription Subscription) {
         return service.save(Subscription);
     }
 
-    @RequestMapping(value = "/subscriptions/{id}", method = RequestMethod.DELETE)
-    @ResponseBody
-    public void delete(@PathVariable long id) {
-        service.remove(id);
-    }
+
 
 }

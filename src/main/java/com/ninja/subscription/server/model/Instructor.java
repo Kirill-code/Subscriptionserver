@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name="instructor")
 @Proxy(lazy = false)
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Instructor {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
