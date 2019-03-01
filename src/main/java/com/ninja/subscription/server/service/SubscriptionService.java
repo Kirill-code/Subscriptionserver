@@ -12,5 +12,6 @@ public interface SubscriptionService {
     Subscription save(Subscription Subscription);
     void remove(long id);
     SubscriptionDTO getByUidDto(String uid);
+    //void addNewOne(String uid);
 
 }

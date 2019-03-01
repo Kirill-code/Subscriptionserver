@@ -18,15 +18,17 @@ import java.util.stream.Collectors;
 @Service
 public class SubscriptionServiceImpl implements SubscriptionService {
 
-
+    Date current=new java.sql.Date(System.currentTimeMillis());
     @Autowired
     SubscriptionRepository subRepository;
-
+    /*
+    * This update db
+    * */
     @Override
     public SubscriptionDTO getByUidDto(String uid) {
         Subscription temp=subRepository.findByUid(uid);
         List<VisitDate> visits=temp.getVisitDates();
-        visits.add(new VisitDate(new java.sql.Date(System.currentTimeMillis()),temp));
+        visits.add(new VisitDate(current,temp));
         temp.setVisitDates(visits);
         SubscriptionDTO test= new SubscriptionDTO(
                 temp.getId(),
@@ -43,6 +45,11 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         save(temp);
         return test;
     }
+
+   /* @Override*/
+   /* public void addNewOne(String uid) {*/
+   /*     Subscription newOne=new Subscription(uid,current,current,111,"TEst",))*/
+   /* }*/
 
 /*    @Override
     public SubscriptionDTO getByID(long id) {
