@@ -20,10 +20,15 @@ public class VisitDate {
     @Column(name = "id")
     private long id;
 
+    private long instr_id;
 
     @Column(name = "date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date date;
+
+    @ManyToOne
+    @JoinColumn(name="subscription_id")
+    private Subscription associatedSub;
 
     public Subscription getAssociatedSub() {
         return associatedSub;
@@ -33,23 +38,8 @@ public class VisitDate {
         this.associatedSub = associatedSub;
     }
 
-    @ManyToOne
-    @JoinColumn(name="subscription_id")
-    private Subscription associatedSub;
 
-    public VisitDate(long id,Date date, Subscription associatedSub) {
-        this.id=id;
-        this.date = date;
-        this.associatedSub = associatedSub;
-    }
-    public VisitDate(Date date, Subscription associatedSub) {
 
-        this.date = date;
-        this.associatedSub = associatedSub;
-    }
-
-    public VisitDate() {
-    }
 
     public long getId() {
         return id;
@@ -59,6 +49,13 @@ public class VisitDate {
         this.id = id;
     }
 
+    public long getInstr_id() {
+        return instr_id;
+    }
+
+    public void setInstr_id(long instr_id) {
+        this.instr_id = instr_id;
+    }
 
     public Date getDate() {
         return date;

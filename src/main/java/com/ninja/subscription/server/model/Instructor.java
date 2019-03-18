@@ -36,9 +36,12 @@ public class Instructor {
         this.instructorSubscriptions = instructorSubscriptions;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "associatedInstructor")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "associatedInstructor", orphanRemoval=true)
     private List<Subscription> instructorSubscriptions= new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name= "instr_id")
+    private List<VisitDate> visitInstr = new ArrayList<>();
 
     public String getName() {
         return name;

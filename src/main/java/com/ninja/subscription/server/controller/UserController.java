@@ -55,8 +55,12 @@ public class UserController {
     @ResponseBody
     public User setAdminClaim(@RequestHeader("token") String idToken, @RequestHeader("uid") String uid) throws FirebaseAuthException {
         //TODO go to AUTH interface
-        User resUser;
-        if (Boolean.TRUE.equals(chcker.checkUsers(idToken))) {
+        User resUser=new User("uid","unsuccess. User existed");
+        UserRecord.UpdateRequest request = new UserRecord.UpdateRequest(uid)
+                .setEmail("user@example.com");
+
+        UserRecord userRecord = FirebaseAuth.getInstance().updateUser(request);
+        /*if (Boolean.TRUE.equals(chcker.checkUsers(idToken))) {
             Map<String, Object> claims = new HashMap<>();
             claims.put("admin", true);
 
@@ -64,10 +68,8 @@ public class UserController {
                 UserRecord user = FirebaseAuth.getInstance().getUser(uid);
 
                 if (Boolean.TRUE.equals(user.getCustomClaims().get("admin"))) {
-                    System.out.println(" yes");
                     resUser=new User("uid","unsuccess. User existed");
                 }else {
-                    System.out.println(" no");
                     FirebaseAuth.getInstance().setCustomUserClaims(uid, claims);
                     resUser=new User("uid","success");
                     log.info(uid+" admnis rights assigned " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
@@ -77,7 +79,7 @@ public class UserController {
                 resUser=new User("","wrong user");
             }
         }else{
-        resUser=new User("","wrong user");}
+        resUser=new User("","wrong user");}*/
         return resUser;
     }
 }

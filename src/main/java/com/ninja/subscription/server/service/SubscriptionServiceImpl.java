@@ -10,9 +10,7 @@ import com.ninja.subscription.server.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,22 +25,31 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     @Override
     public SubscriptionDTO getByUidDto(String uid) {
         Subscription temp=subRepository.findByUid(uid);
-        List<VisitDate> visits=temp.getVisitDates();
-        visits.add(new VisitDate(current,temp));
+
+        Set<VisitDate> visits=temp.getVisitDates();
+
+       VisitDate crD=new VisitDate();
+        crD.setDate(current);
+        crD.setInstr_id(1);
+        visits.add(crD);
         temp.setVisitDates(visits);
-        SubscriptionDTO test= new SubscriptionDTO(
-                temp.getId(),
-                temp.getPrice(),
-                temp.getUserid(),
-                temp.getDescription(),
-                temp.getSaleDate(),
-                temp.getFinishDate(),
-                new InstructorDTO(
-                        temp.getAssociatedInstructor().getId(),
-                        temp.getAssociatedInstructor().getName(),
-                        temp.getAssociatedInstructor().getSurname()),
-                temp.getVisitDates().stream().map(vd->new VisitDateDTO(vd.getId(),vd.getDate())).collect(Collectors.toList()));
         save(temp);
+       SubscriptionDTO test= new SubscriptionDTO();
+                test.setId(temp.getId());
+                test.setPrice(temp.getPrice());
+                test.setUserid(temp.getUserid());
+                test.setDescription(temp.getDescription());
+                test.setSaleDate(temp.getSaleDate());
+                test.setFinishDate(temp.getFinishDate());
+                test.setInstructorId(temp.getAssociatedInstructor().getId());
+                test.setInstrName(temp.getAssociatedInstructor().getName());
+                test.setInstrSurname(temp.getAssociatedInstructor().getSurname());
+        Set<VisitDateDTO> list = new HashSet<>();
+        for (VisitDate vd : temp.getVisitDates()) {
+            VisitDateDTO visitDateDTO = new VisitDateDTO(vd.getId(), vd.getDate());
+            list.add(visitDateDTO);
+        }
+        test.setVisitDates(list);
         return test;
     }
 

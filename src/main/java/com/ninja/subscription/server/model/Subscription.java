@@ -1,17 +1,9 @@
 package com.ninja.subscription.server.model;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Entity
@@ -20,22 +12,13 @@ import java.util.List;
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Subscription {
 
+
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "subscription_id")
     private long id;
 
     @Column(name = "userid", nullable = false)
     private String userid;
-
-    public Subscription(String userid, Date saleDate, Date finishDate, long price, String description, List<VisitDate> visitDates, Instructor associatedInstructor) {
-        this.userid = userid;
-        this.saleDate = saleDate;
-        this.finishDate = finishDate;
-        this.price = price;
-        this.description = description;
-        this.visitDates = visitDates;
-        this.associatedInstructor = associatedInstructor;
-    }
 
     @Column(name = "saledate", nullable = false)
     @Temporal(TemporalType.DATE)
@@ -52,8 +35,8 @@ public class Subscription {
     private String description;
 
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "associatedSub")
-    private List<VisitDate> visitDates = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "associatedSub",orphanRemoval=true)
+    private Set<VisitDate> visitDates = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name="instructor_id")
@@ -62,9 +45,6 @@ public class Subscription {
 
     public String getUserid() {
         return userid;
-    }
-
-    public Subscription() {
     }
 
     public void setUserid(String userid) {
@@ -81,13 +61,14 @@ public class Subscription {
 
     /*********************
      * Getters and Setters
-     * *******************/
+     *
+     * @param visitDates*******************/
 
-    public void setVisitDates(List<VisitDate> visitDates) {
+    public void setVisitDates(Set<VisitDate> visitDates) {
         this.visitDates = visitDates;
     }
 
-    public List<VisitDate> getVisitDates() {
+    public Set<VisitDate> getVisitDates() {
         return visitDates;
     }
 
@@ -106,14 +87,6 @@ public class Subscription {
     public void setUserId(String userid) {
         this.userid = userid;
     }
-
-  /*  public long getInstructorId() {
-        return instructorId;
-    }
-
-    public void setInstructorId(long instructorId) {
-        this.instructorId = instructorId;
-    }*/
 
     public Date getSaleDate() {
         return saleDate;
