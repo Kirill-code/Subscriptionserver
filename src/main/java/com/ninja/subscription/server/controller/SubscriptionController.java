@@ -27,36 +27,32 @@ public class SubscriptionController {
     private static Logger log = Logger.getLogger(SubscriptionController.class.getName());
 
     Utils checker = new Utils();
-    //TODO check which methods delete
-
 
     @RequestMapping(value = "/uidsubscription/{uid}", method = RequestMethod.GET)
     @ResponseBody
-    public SubscriptionDTO getSubscriptioner(@PathVariable("uid") String SubscriptionUID) {
-        return service.getByUidDto(SubscriptionUID);
+    public SubscriptionDTO getSubscriptioner(/*@RequestHeader("token") String idToken,*/@PathVariable("uid") String SubscriptionUID) {
+        /*if (Boolean.TRUE.equals(checker.checkUsers(idToken))) {
+        }*/
+            return service.getByUidDto(SubscriptionUID);
     }
 
     /*DELETE*/
-    @RequestMapping(value = "/subscriptions/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deletesubscriptions/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public void delete(@PathVariable long id) {
         service.remove(id);
     }
 
-    /*GET BY UID*/  /*
-    @RequestMapping(value = "/subscription/{uid}", method = RequestMethod.GET)
+    @RequestMapping(value = "/savesubscription", method = RequestMethod.POST)
     @ResponseBody
-    public Subscription getSubscriptionByUid(@PathVariable("uid") String uid,@RequestHeader("token") String idToken) {
-        if (Boolean.TRUE.equals(checker.checkUsers(idToken))) {
-            return service.getByUid(uid);}
-       else {
-            return  service.error();
-        }
-    }*/
-    @RequestMapping(value = "/savesubscriptions", method = RequestMethod.POST)
+    public void saveSubscription(@RequestBody Subscription Subscription) {
+         service.save(Subscription);
+    }
+
+    @RequestMapping(value = "/insertsubscription", method = RequestMethod.POST)
     @ResponseBody
-    public Subscription saveRemider(@RequestBody Subscription Subscription) {
-        return service.save(Subscription);
+    public void createSubscription(@RequestBody SubscriptionDTO subscription) {
+        service.insertNew(subscription);
     }
 
 

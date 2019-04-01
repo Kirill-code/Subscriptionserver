@@ -9,7 +9,6 @@ import java.util.*;
 @Entity
 @Table(name = "subscription")
 @Proxy(lazy = false)
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Subscription {
 
 
@@ -34,6 +33,8 @@ public class Subscription {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "current")
+    private Boolean current;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "associatedSub",orphanRemoval=true)
     private Set<VisitDate> visitDates = new HashSet<>();
@@ -42,7 +43,10 @@ public class Subscription {
     @JoinColumn(name="instructor_id")
     private Instructor associatedInstructor;
 
-
+    /*********************
+     * Getters and Setters
+     *
+     ********************/
     public String getUserid() {
         return userid;
     }
@@ -59,10 +63,13 @@ public class Subscription {
         this.associatedInstructor = associatedInstructor;
     }
 
-    /*********************
-     * Getters and Setters
-     *
-     * @param visitDates*******************/
+    public Boolean getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Boolean current) {
+        this.current = current;
+    }
 
     public void setVisitDates(Set<VisitDate> visitDates) {
         this.visitDates = visitDates;

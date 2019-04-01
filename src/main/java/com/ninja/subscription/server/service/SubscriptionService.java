@@ -12,6 +12,7 @@ public interface SubscriptionService {
     Subscription save(Subscription Subscription);
     void remove(long id);
     SubscriptionDTO getByUidDto(String uid);
+    void insertNew(SubscriptionDTO subscription);
     //void addNewOne(String uid);
 
 }

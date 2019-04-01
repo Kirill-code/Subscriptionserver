@@ -9,7 +9,10 @@ import com.ninja.subscription.server.model.dto.VisitDateDTO;
 import com.ninja.subscription.server.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -17,6 +20,7 @@ import java.util.stream.Collectors;
 public class SubscriptionServiceImpl implements SubscriptionService {
 
     Date current=new java.sql.Date(System.currentTimeMillis());
+
     @Autowired
     SubscriptionRepository subRepository;
     /*
@@ -24,7 +28,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     * */
     @Override
     public SubscriptionDTO getByUidDto(String uid) {
-        Subscription temp=subRepository.findByUid(uid);
+
+        Subscription temp=subRepository.findByUid(uid,Boolean.TRUE);
 
         Set<VisitDate> visits=temp.getVisitDates();
 
@@ -33,7 +38,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         crD.setInstr_id(1);
         visits.add(crD);
         temp.setVisitDates(visits);
-        save(temp);
        SubscriptionDTO test= new SubscriptionDTO();
                 test.setId(temp.getId());
                 test.setPrice(temp.getPrice());
@@ -44,33 +48,32 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 test.setInstructorId(temp.getAssociatedInstructor().getId());
                 test.setInstrName(temp.getAssociatedInstructor().getName());
                 test.setInstrSurname(temp.getAssociatedInstructor().getSurname());
-        Set<VisitDateDTO> list = new HashSet<>();
-        for (VisitDate vd : temp.getVisitDates()) {
-            VisitDateDTO visitDateDTO = new VisitDateDTO(vd.getId(), vd.getDate());
-            list.add(visitDateDTO);
-        }
-        test.setVisitDates(list);
+                test.setVisitDates( temp.getVisitDates().stream().map(vd->new VisitDateDTO(vd.getId(),vd.getDate())).collect(Collectors.toSet()));
         return test;
     }
+    public Subscription convertDTO2Sub(SubscriptionDTO subscriptionDTO){
+        Subscription temp=new Subscription();
+        temp.setPrice(subscriptionDTO.getPrice());
+        temp.setUserid(subscriptionDTO.getUserid());
+        temp.setDescription(subscriptionDTO.getDescription());
+        temp.setSaleDate(subscriptionDTO.getSaleDate());
+        temp.setFinishDate(subscriptionDTO.getFinishDate());
 
-   /* @Override*/
-   /* public void addNewOne(String uid) {*/
-   /*     Subscription newOne=new Subscription(uid,current,current,111,"TEst",))*/
-   /* }*/
-
-/*    @Override
-    public SubscriptionDTO getByID(long id) {
-        Subscription temp=subRepository.getOne(id);
-        return new SubscriptionDTO(temp.getId(),temp.getPrice(),temp.getUserid(),
-                temp.getDescription(),temp.getSaleDate(),
-                new InstructorDTO(temp.getAssociatedInstructor().getId(),temp.getAssociatedInstructor().getName(),temp.getAssociatedInstructor().getSurname()),
-                temp.getVisitDates().stream().map(vd->new VisitDateDTO(vd.getId(),vd.getDate())).collect(Collectors.toList()));
-    }*/
+        return temp;
+    }
 
     @Override
     public Subscription save(Subscription sub) {
-
         return subRepository.saveAndFlush(sub);
+    }
+
+
+    @Override
+    public void insertNew(SubscriptionDTO subscription) {
+        //TODO create new user in FireBase
+
+
+        save(convertDTO2Sub(subscription));
     }
 
     @Override

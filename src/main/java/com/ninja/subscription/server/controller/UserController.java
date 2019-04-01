@@ -53,11 +53,11 @@ public class UserController {
     }
     @RequestMapping(value = "/adminclaim", method = RequestMethod.POST)
     @ResponseBody
-    public User setAdminClaim(@RequestHeader("token") String idToken, @RequestHeader("uid") String uid) throws FirebaseAuthException {
+    public String setAdminClaim(@RequestHeader("token") String idToken, @RequestHeader("uid") String uid) throws FirebaseAuthException {
         //TODO go to AUTH interface
-        User resUser=new User("uid","unsuccess. User existed");
+       String result="Success";
         UserRecord.UpdateRequest request = new UserRecord.UpdateRequest(uid)
-                .setEmail("user@example.com");
+                .setEmail("user2@example.com");
 
         UserRecord userRecord = FirebaseAuth.getInstance().updateUser(request);
         /*if (Boolean.TRUE.equals(chcker.checkUsers(idToken))) {
@@ -80,6 +80,6 @@ public class UserController {
             }
         }else{
         resUser=new User("","wrong user");}*/
-        return resUser;
+        return result;
     }
 }
