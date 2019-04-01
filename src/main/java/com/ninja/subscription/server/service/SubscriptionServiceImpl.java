@@ -1,19 +1,15 @@
 package com.ninja.subscription.server.service;
 
-import com.ninja.subscription.server.model.Instructor;
 import com.ninja.subscription.server.model.Subscription;
 import com.ninja.subscription.server.model.VisitDate;
-import com.ninja.subscription.server.model.dto.InstructorDTO;
 import com.ninja.subscription.server.model.dto.SubscriptionDTO;
 import com.ninja.subscription.server.model.dto.VisitDateDTO;
 import com.ninja.subscription.server.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.*;
+import java.util.Date;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service

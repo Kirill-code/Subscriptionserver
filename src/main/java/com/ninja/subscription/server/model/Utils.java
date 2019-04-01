@@ -3,7 +3,6 @@ package com.ninja.subscription.server.model;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
-import com.ninja.subscription.server.controller.UserController;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

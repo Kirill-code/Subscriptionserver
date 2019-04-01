@@ -1,9 +1,7 @@
 package com.ninja.subscription.server.controller;
 
-import com.ninja.subscription.server.model.Subscription;
 import com.ninja.subscription.server.model.Utils;
 import com.ninja.subscription.server.model.VisitDate;
-import com.ninja.subscription.server.service.SubscriptionService;
 import com.ninja.subscription.server.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

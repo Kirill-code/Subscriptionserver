@@ -1,21 +1,14 @@
 package com.ninja.subscription.server.controller;
 
 
-import com.google.firebase.auth.*;
 import com.ninja.subscription.server.model.Subscription;
 import com.ninja.subscription.server.model.Utils;
-import com.ninja.subscription.server.model.VisitDate;
 import com.ninja.subscription.server.model.dto.SubscriptionDTO;
 import com.ninja.subscription.server.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
-import javax.rmi.CORBA.Util;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.logging.Logger;
 
 @RestController

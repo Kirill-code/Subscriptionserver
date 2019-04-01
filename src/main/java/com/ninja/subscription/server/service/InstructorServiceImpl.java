@@ -1,7 +1,6 @@
 package com.ninja.subscription.server.service;
 
 import com.ninja.subscription.server.model.Instructor;
-import com.ninja.subscription.server.model.Subscription;
 import com.ninja.subscription.server.repository.InstructorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

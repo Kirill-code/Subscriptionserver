@@ -3,7 +3,6 @@ package com.ninja.subscription.server.service;
 
 import com.ninja.subscription.server.model.VisitDate;
 import com.ninja.subscription.server.repository.VisitDateRepository;
-import com.ninja.subscription.server.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,5 @@
 package com.ninja.subscription.server.service;
 
-import com.ninja.subscription.server.model.Subscription;
 import com.ninja.subscription.server.model.VisitDate;
 
 import java.util.List;
