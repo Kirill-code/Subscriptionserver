@@ -9,22 +9,6 @@ import java.util.Date;
 import java.util.logging.Logger;
 
 public class Utils {
-    private static Logger log = Logger.getLogger(Utils.class.getName());
 
-    public boolean checkUsers(String idToken) {
-        FirebaseToken decodedToken = null;
-        boolean result;
-        try {
-            decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
 
-            log.info(decodedToken.getEmail() + " logged at " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
-            result = true;
-        } catch (FirebaseAuthException e) {
-            log.info("Auth error at " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
-
-            e.printStackTrace();
-            result = false;
-        }
-        return result;
-    }
 }

@@ -1,6 +1,7 @@
 package com.ninja.subscription.server.controller;
 
 import com.google.firebase.auth.*;
+import com.ninja.subscription.server.model.IdentityProvider;
 import com.ninja.subscription.server.model.User;
 import com.ninja.subscription.server.model.Utils;
 import com.ninja.subscription.server.service.SubscriptionService;
@@ -20,7 +21,7 @@ public class UserController {
 
     private static Logger log = Logger.getLogger(UserController.class.getName());
 
-    Utils chcker=new Utils();
+    IdentityProvider chcker=new IdentityProvider();
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     @ResponseBody
@@ -30,24 +31,27 @@ public class UserController {
             // Start listing users from the beginning, 1000 at a time.
             try {
                 ListUsersPage page = FirebaseAuth.getInstance().listUsers(null);
+                //Create list of Sub Users with data from Firebase: user - firebase object
                 while (page != null) {
                     for (ExportedUserRecord user : page.getValues()) {
-                        list.add(new User(user.getUid(), user.getEmail()));
+                        User tempUser=new User();
+                        tempUser.setUid(user.getUid());
+                        tempUser.setEmail(user.getEmail());
+                        list.add(tempUser);
                     }
                     page = page.getNextPage();
                 }
             } catch (FirebaseAuthException e) {
                 e.printStackTrace();
-                list.add(new User("Auth","Error"));
             }
             log.info(" Users list sent " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
 
         } else {
-
-            list.add(new User("Auth","Error"));
-
+            User tempUser=new User();
+            tempUser.setUid("Auth");
+            tempUser.setEmail("Error");
+            list.add(tempUser);
         }
-
 
         return list;
     }

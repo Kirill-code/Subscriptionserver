@@ -38,6 +38,9 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 test.setId(temp.getId());
                 test.setPrice(temp.getPrice());
                 test.setUserid(temp.getUserid());
+                test.setUserName(temp.getAssociatedUser().getName());
+                test.setUserSurName(temp.getAssociatedUser().getSurname());
+                test.setUserMobile(temp.getAssociatedUser().getMobile());
                 test.setDescription(temp.getDescription());
                 test.setSaleDate(temp.getSaleDate());
                 test.setFinishDate(temp.getFinishDate());

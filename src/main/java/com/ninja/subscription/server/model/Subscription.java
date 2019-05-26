@@ -43,6 +43,10 @@ public class Subscription {
     @JoinColumn(name="instructor_id")
     private Instructor associatedInstructor;
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User associatedUser;
+
     /*********************
      * Getters and Setters
      *
@@ -63,6 +67,13 @@ public class Subscription {
         this.associatedInstructor = associatedInstructor;
     }
 
+    public User getAssociatedUser() {
+        return associatedUser;
+    }
+
+    public void setAssociatedUser(User associatedUser) {
+        this.associatedUser = associatedUser;
+    }
     public Boolean getCurrent() {
         return current;
     }

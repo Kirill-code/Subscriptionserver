@@ -12,12 +12,38 @@ public class SubscriptionDTO {
             instructorId;
 
     private String userid,
+            userName,
+            userSurName,
+            userMobile,
             description,
             instrName,
             instrSurname;
 
     private Set<VisitDateDTO> visitDates = new HashSet<>();
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserSurName() {
+        return userSurName;
+    }
+
+    public void setUserSurName(String userSurName) {
+        this.userSurName = userSurName;
+    }
+
+    public String getUserMobile() {
+        return userMobile;
+    }
+
+    public void setUserMobile(String userMobile) {
+        this.userMobile = userMobile;
+    }
 
     public void setSaleDate(Date saleDate) {
         this.saleDate = saleDate;

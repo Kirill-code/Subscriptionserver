@@ -1,6 +1,7 @@
 package com.ninja.subscription.server.controller;
 
 
+import com.ninja.subscription.server.model.IdentityProvider;
 import com.ninja.subscription.server.model.Subscription;
 import com.ninja.subscription.server.model.Utils;
 import com.ninja.subscription.server.model.dto.SubscriptionDTO;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Map;
 import java.util.logging.Logger;
 
 @RestController
@@ -19,14 +22,22 @@ public class SubscriptionController {
 
     private static Logger log = Logger.getLogger(SubscriptionController.class.getName());
 
-    Utils checker = new Utils();
+    IdentityProvider checker = new IdentityProvider();
+
+    @RequestMapping(value = "/verify", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Boolean> verifyUser(@RequestHeader("token") String idToken) {
+        if (Boolean.TRUE.equals(checker.checkUsers(idToken))) {
+            return Collections.singletonMap("success", true);
+        } else return Collections.singletonMap("success", false);
+    }
 
     @RequestMapping(value = "/uidsubscription/{uid}", method = RequestMethod.GET)
     @ResponseBody
-    public SubscriptionDTO getSubscriptioner(/*@RequestHeader("token") String idToken,*/@PathVariable("uid") String SubscriptionUID) {
-        /*if (Boolean.TRUE.equals(checker.checkUsers(idToken))) {
-        }*/
-            return service.getByUidDto(SubscriptionUID);
+    public SubscriptionDTO getSubscriptioner(@RequestHeader("token") String idToken,@PathVariable("uid") String SubscriptionUID) {
+        if (Boolean.TRUE.equals(checker.checkUsers(idToken))) {
+        }
+        return service.getByUidDto(SubscriptionUID);
     }
 
     /*DELETE*/
@@ -39,7 +50,7 @@ public class SubscriptionController {
     @RequestMapping(value = "/savesubscription", method = RequestMethod.POST)
     @ResponseBody
     public void saveSubscription(@RequestBody Subscription Subscription) {
-         service.save(Subscription);
+        service.save(Subscription);
     }
 
     @RequestMapping(value = "/insertsubscription", method = RequestMethod.POST)
@@ -47,7 +58,6 @@ public class SubscriptionController {
     public void createSubscription(@RequestBody SubscriptionDTO subscription) {
         service.insertNew(subscription);
     }
-
 
 
 }
