@@ -1,19 +1,16 @@
 package com.ninja.subscription.server.controller;
 
 import com.google.firebase.auth.*;
+import com.ninja.subscription.server.model.FirebaseProvider;
 import com.ninja.subscription.server.model.IdentityProvider;
 import com.ninja.subscription.server.model.User;
-import com.ninja.subscription.server.model.Utils;
-import com.ninja.subscription.server.service.SubscriptionService;
-import com.ninja.subscription.server.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
-
-import static java.lang.Boolean.*;
 
 @RestController
 public class UserController {
@@ -21,7 +18,7 @@ public class UserController {
 
     private static Logger log = Logger.getLogger(UserController.class.getName());
 
-    IdentityProvider chcker=new IdentityProvider();
+    IdentityProvider chcker=new FirebaseProvider();
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     @ResponseBody

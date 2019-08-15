@@ -1,13 +1,12 @@
 package com.ninja.subscription.server.controller;
 
 
+import com.ninja.subscription.server.model.FirebaseProvider;
 import com.ninja.subscription.server.model.IdentityProvider;
 import com.ninja.subscription.server.model.Subscription;
-import com.ninja.subscription.server.model.Utils;
 import com.ninja.subscription.server.model.dto.SubscriptionDTO;
 import com.ninja.subscription.server.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -22,7 +21,7 @@ public class SubscriptionController {
 
     private static Logger log = Logger.getLogger(SubscriptionController.class.getName());
 
-    IdentityProvider checker = new IdentityProvider();
+    IdentityProvider checker = new FirebaseProvider();
 
     @RequestMapping(value = "/verify", method = RequestMethod.GET)
     @ResponseBody
@@ -32,11 +31,12 @@ public class SubscriptionController {
         } else return Collections.singletonMap("success", false);
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/uidsubscription/{uid}", method = RequestMethod.GET)
     @ResponseBody
-    public SubscriptionDTO getSubscriptioner(@RequestHeader("token") String idToken,@PathVariable("uid") String SubscriptionUID) {
-        if (Boolean.TRUE.equals(checker.checkUsers(idToken))) {
-        }
+    public SubscriptionDTO getSubscriptioner(/*@RequestHeader("token") String idToken,*/@PathVariable("uid") String SubscriptionUID) {
+       /* if (Boolean.TRUE.equals(checker.checkUsers(idToken))) {
+        }*/
         return service.getByUidDto(SubscriptionUID);
     }
 
