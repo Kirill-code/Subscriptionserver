@@ -32,7 +32,7 @@ public class VisitServiceImpl implements VisitService {
     }
 
     @Override
-    public void remove(long id) {
-        visitRepository.delete(id);
+    public void remove(Long id) {
+        visitRepository.deleteById(id);
     }
 }

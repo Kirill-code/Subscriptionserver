@@ -3,7 +3,9 @@ package com.ninja.subscription.server.model;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -21,11 +23,11 @@ public class Subscription {
 
     @Column(name = "saledate", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date saleDate;
+    private LocalDateTime saleDate;
 
     @Column(name = "finishdate", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date finishDate;
+
+    private LocalDateTime finishDate;
 
     @Column(name = "price", nullable = false)
     private long price;
@@ -106,19 +108,19 @@ public class Subscription {
         this.userid = userid;
     }
 
-    public Date getSaleDate() {
+    public LocalDateTime getSaleDate() {
         return saleDate;
     }
 
-    public void setSaleDate(Date saleDate) {
+    public void setSaleDate(LocalDateTime saleDate) {
         this.saleDate = saleDate;
     }
 
-    public Date getFinishDate() {
+    public LocalDateTime getFinishDate() {
         return finishDate;
     }
 
-    public void setFinishDate(Date finishDate) {
+    public void setFinishDate(LocalDateTime finishDate) {
         this.finishDate = finishDate;
     }
 

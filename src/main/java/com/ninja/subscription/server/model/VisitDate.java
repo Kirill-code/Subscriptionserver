@@ -1,7 +1,6 @@
 package com.ninja.subscription.server.model;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name="visitdate")
@@ -13,9 +12,8 @@ public class VisitDate {
 
     private long instr_id;
 
-    @Column(name = "date", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date date;
+   /* @Column(name = "date", nullable = false)
+    private LocalDateTime date;*/
 
     @ManyToOne
     @JoinColumn(name="subscription_id")
@@ -48,12 +46,12 @@ public class VisitDate {
         this.instr_id = instr_id;
     }
 
-    public Date getDate() {
+    /*public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
-    }
+    }*/
 }
 

@@ -6,7 +6,7 @@ import com.ninja.subscription.server.model.dto.SubscriptionDTO;
 public interface SubscriptionService {
     //SubscriptionDTO getByID(long id);
     Subscription save(Subscription Subscription);
-    void remove(long id);
+    void remove(Long id);
     SubscriptionDTO getByUidDto(String uid);
     void insertNew(SubscriptionDTO subscription);
     //void addNewOne(String uid);

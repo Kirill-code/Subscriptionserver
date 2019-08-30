@@ -3,19 +3,17 @@ package com.ninja.subscription.server.service;
 import com.ninja.subscription.server.model.Subscription;
 import com.ninja.subscription.server.model.VisitDate;
 import com.ninja.subscription.server.model.dto.SubscriptionDTO;
-import com.ninja.subscription.server.model.dto.VisitDateDTO;
 import com.ninja.subscription.server.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class SubscriptionServiceImpl implements SubscriptionService {
 
-    Date current=new java.sql.Date(System.currentTimeMillis());
+    LocalDateTime current=LocalDateTime.now();
 
     @Autowired
     SubscriptionRepository subRepository;
@@ -30,7 +28,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         Set<VisitDate> visits=temp.getVisitDates();
 
        VisitDate crD=new VisitDate();
-        crD.setDate(current);
+        //crD.setDate(current);
         crD.setInstr_id(1);
         visits.add(crD);
         temp.setVisitDates(visits);
@@ -47,7 +45,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 test.setInstructorId(temp.getAssociatedInstructor().getId());
                 test.setInstrName(temp.getAssociatedInstructor().getName());
                 test.setInstrSurname(temp.getAssociatedInstructor().getSurname());
-                test.setVisitDates( temp.getVisitDates().stream().map(vd->new VisitDateDTO(vd.getId(),vd.getDate())).collect(Collectors.toSet()));
+               // test.setVisitDates( temp.getVisitDates().stream().map(vd->new VisitDateDTO(vd.getId(),vd.getDate())).collect(Collectors.toSet()));
         return test;
     }
     public Subscription convertDTO2Sub(SubscriptionDTO subscriptionDTO){
@@ -76,8 +74,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public void remove(long id) {
-        subRepository.delete(id);
+    public void remove(Long id) {
+        subRepository.deleteById(id);
     }
 
 }

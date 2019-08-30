@@ -8,6 +8,6 @@ public interface VisitService {
     List<VisitDate> getAll();
     VisitDate getByID(long id);
     VisitDate save(VisitDate visit);
-    void remove(long id);
+    void remove(Long id);
 
 }

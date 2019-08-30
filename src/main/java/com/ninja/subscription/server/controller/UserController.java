@@ -4,11 +4,10 @@ import com.google.firebase.auth.*;
 import com.ninja.subscription.server.model.FirebaseProvider;
 import com.ninja.subscription.server.model.IdentityProvider;
 import com.ninja.subscription.server.model.User;
+import com.ninja.subscription.server.model.Utils;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -41,7 +40,7 @@ public class UserController {
             } catch (FirebaseAuthException e) {
                 e.printStackTrace();
             }
-            log.info(" Users list sent " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
+            log.info(" Users list sent " + Utils.getTimeStamp());
 
         } else {
             User tempUser=new User();

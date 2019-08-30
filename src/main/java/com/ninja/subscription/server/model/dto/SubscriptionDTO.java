@@ -1,10 +1,11 @@
 package com.ninja.subscription.server.model.dto;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class SubscriptionDTO {
 
-    private Date saleDate,
+    private LocalDateTime saleDate,
             finishDate;
 
     private long id,
@@ -45,11 +46,11 @@ public class SubscriptionDTO {
         this.userMobile = userMobile;
     }
 
-    public void setSaleDate(Date saleDate) {
+    public void setSaleDate(LocalDateTime saleDate) {
         this.saleDate = saleDate;
     }
 
-    public void setFinishDate(Date finishDate) {
+    public void setFinishDate(LocalDateTime finishDate) {
         this.finishDate = finishDate;
     }
 
@@ -84,11 +85,11 @@ public class SubscriptionDTO {
         this.visitDates = visitDates;
     }
 
-    public Date getSaleDate() {
+    public LocalDateTime getSaleDate() {
         return saleDate;
     }
 
-    public Date getFinishDate() {
+    public LocalDateTime getFinishDate() {
         return finishDate;
     }
 

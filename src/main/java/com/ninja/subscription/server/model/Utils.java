@@ -1,14 +1,10 @@
 package com.ninja.subscription.server.model;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseToken;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Logger;
+import java.time.LocalDateTime;
 
 public class Utils {
 
-
+    public static LocalDateTime getTimeStamp() {
+        return LocalDateTime.now();
+    }
 }

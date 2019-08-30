@@ -1,14 +1,14 @@
 package com.ninja.subscription.server.model.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class VisitDateDTO {
     private long id;
 
 
-    private Date date;
+    private LocalDateTime date;
 
-    public VisitDateDTO(long id, Date date) {
+    public VisitDateDTO(long id, LocalDateTime date) {
         this.id = id;
         this.date = date;
     }
@@ -20,11 +20,11 @@ public class VisitDateDTO {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

@@ -30,6 +30,6 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public void remove(long id) {
-        instructorRepository.delete(id);
+        instructorRepository.deleteById(id);
     }
 }
