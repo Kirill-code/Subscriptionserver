@@ -1,11 +1,13 @@
 package com.ninja.subscription.server.service;
 
 import com.ninja.subscription.server.model.Instructor;
+import com.ninja.subscription.server.model.dto.InstructorDTO;
 import com.ninja.subscription.server.repository.InstructorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class InstructorServiceImpl implements InstructorService {
@@ -14,8 +16,9 @@ public class InstructorServiceImpl implements InstructorService {
     InstructorRepository instructorRepository;
 
     @Override
-    public List<Instructor> getAll() {
-        return instructorRepository.findAll();
+    public List<InstructorDTO> getAll() {
+        return instructorRepository.findAll()
+                .stream().map(tmp->new InstructorDTO(tmp.getId(),tmp.getName(),tmp.getSurname())).collect(Collectors.toList());
     }
 
     @Override

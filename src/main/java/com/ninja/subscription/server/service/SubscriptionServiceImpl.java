@@ -19,25 +19,25 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Autowired
     SubscriptionRepository subRepository;
-    /*
-    * This update db
-    * */
+
     @Override
     public SubscriptionDTO getByUidDto(String uid) {
 
         Subscription temp=subRepository.findByUid(uid,Boolean.TRUE);
 
         Set<VisitDate> visits=temp.getVisitDates();
-
+/*
        VisitDate crD=new VisitDate();
         crD.setDate(current);
         crD.setInstr_id(1);
+
         visits.add(crD);
-        temp.setVisitDates(visits);
+        temp.setVisitDates(visits);*/
        SubscriptionDTO test= new SubscriptionDTO();
                 test.setId(temp.getId());
                 test.setPrice(temp.getPrice());
-                test.setUserid(temp.getUserid());
+                test.setAssociatedUserId(temp.getAssociatedUser().getUid()
+                );
                 test.setUserName(temp.getAssociatedUser().getName());
                 test.setUserSurName(temp.getAssociatedUser().getSurname());
                 test.setUserMobile(temp.getAssociatedUser().getMobile());
@@ -47,13 +47,12 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 test.setInstructorId(temp.getAssociatedInstructor().getId());
                 test.setInstrName(temp.getAssociatedInstructor().getName());
                 test.setInstrSurname(temp.getAssociatedInstructor().getSurname());
-                test.setVisitDates( temp.getVisitDates().stream().map(vd->new VisitDateDTO(vd.getId(),vd.getDate())).collect(Collectors.toSet()));
+                test.setVisitDates( temp.getVisitDates().stream().map(vd->new VisitDateDTO(vd.getId(),vd.getDate(),vd.getTime())).collect(Collectors.toSet()));
         return test;
     }
     public Subscription convertDTO2Sub(SubscriptionDTO subscriptionDTO){
         Subscription temp=new Subscription();
         temp.setPrice(subscriptionDTO.getPrice());
-        temp.setUserid(subscriptionDTO.getUserid());
         temp.setDescription(subscriptionDTO.getDescription());
         temp.setSaleDate(subscriptionDTO.getSaleDate());
         temp.setFinishDate(subscriptionDTO.getFinishDate());

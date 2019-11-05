@@ -17,9 +17,19 @@ public class VisitDate {
     @Temporal(TemporalType.DATE)
     private Date date;
 
+    private long time;
+
     @ManyToOne
     @JoinColumn(name="subscription_id")
     private Subscription associatedSub;
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
 
     public Subscription getAssociatedSub() {
         return associatedSub;
@@ -28,9 +38,6 @@ public class VisitDate {
     public void setAssociatedSub(Subscription associatedSub) {
         this.associatedSub = associatedSub;
     }
-
-
-
 
     public long getId() {
         return id;

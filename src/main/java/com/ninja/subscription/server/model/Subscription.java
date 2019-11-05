@@ -16,9 +16,6 @@ public class Subscription {
     @Column(name = "subscription_id")
     private long id;
 
-    @Column(name = "userid", nullable = false)
-    private String userid;
-
     @Column(name = "saledate", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date saleDate;
@@ -47,17 +44,12 @@ public class Subscription {
     @JoinColumn(name="user_id")
     private User associatedUser;
 
+    @Column(name = "count", nullable = false)
+    private int count;
     /*********************
      * Getters and Setters
      *
      ********************/
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
-    }
 
     public Instructor getAssociatedInstructor() {
         return associatedInstructor;
@@ -98,14 +90,6 @@ public class Subscription {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userid;
-    }
-
-    public void setUserId(String userid) {
-        this.userid = userid;
-    }
-
     public Date getSaleDate() {
         return saleDate;
     }
@@ -137,5 +121,14 @@ public class Subscription {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
 }
 

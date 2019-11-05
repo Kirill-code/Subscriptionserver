@@ -1,6 +1,7 @@
 package com.ninja.subscription.server.controller;
 
 import com.ninja.subscription.server.model.Instructor;
+import com.ninja.subscription.server.model.dto.InstructorDTO;
 import com.ninja.subscription.server.service.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +16,11 @@ public class InstructorController {
 
     @RequestMapping(value = "/instructors", method = RequestMethod.GET)
     @ResponseBody
-    public List<Instructor> getAllSubscriptioners() {
+    public List<InstructorDTO> getAllSubscriptioners() {
         return service.getAll();
     }
 
-    @RequestMapping(value = "/instructors/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public Instructor getInstructor(@PathVariable("id") long InstructorID) {
-        return service.getByID(InstructorID);
-    }
-
-    @RequestMapping(value = "/instructors", method = RequestMethod.POST)
+    @RequestMapping(value = "/newinstructor", method = RequestMethod.POST)
     @ResponseBody
     public Instructor saveInstructors(@RequestBody Instructor instructor) {
         return service.save(instructor);

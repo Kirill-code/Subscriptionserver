@@ -11,7 +11,7 @@ public class SubscriptionDTO {
             price,
             instructorId;
 
-    private String userid,
+    private String associatedUserId,
             userName,
             userSurName,
             userMobile,
@@ -65,8 +65,8 @@ public class SubscriptionDTO {
         this.instructorId = instructorId;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setAssociatedUserId(String associatedUserId) {
+        this.associatedUserId= associatedUserId;
     }
 
     public void setDescription(String description) {
@@ -104,8 +104,8 @@ public class SubscriptionDTO {
         return instructorId;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getAssociatedUserId() {
+        return associatedUserId;
     }
 
     public String getDescription() {
