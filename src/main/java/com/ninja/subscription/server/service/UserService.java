@@ -1,9 +1,10 @@
 package com.ninja.subscription.server.service;
 
-import com.ninja.subscription.server.model.User;
+import com.ninja.subscription.server.model.FirebaseUsers;
 
 import java.util.List;
 
 public interface UserService {
+    List<FirebaseUsers> getAll();
 
 }

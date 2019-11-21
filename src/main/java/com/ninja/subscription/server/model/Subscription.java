@@ -42,7 +42,7 @@ public class Subscription {
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    private User associatedUser;
+    private FirebaseUsers associatedFirebaseUsers;
 
     @Column(name = "count", nullable = false)
     private int count;
@@ -59,12 +59,12 @@ public class Subscription {
         this.associatedInstructor = associatedInstructor;
     }
 
-    public User getAssociatedUser() {
-        return associatedUser;
+    public FirebaseUsers getAssociatedFirebaseUsers() {
+        return associatedFirebaseUsers;
     }
 
-    public void setAssociatedUser(User associatedUser) {
-        this.associatedUser = associatedUser;
+    public void setAssociatedFirebaseUsers(FirebaseUsers associatedFirebaseUsers) {
+        this.associatedFirebaseUsers = associatedFirebaseUsers;
     }
     public Boolean getCurrent() {
         return current;

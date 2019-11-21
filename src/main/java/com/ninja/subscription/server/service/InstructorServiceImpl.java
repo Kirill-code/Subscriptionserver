@@ -18,7 +18,13 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public List<InstructorDTO> getAll() {
         return instructorRepository.findAll()
-                .stream().map(tmp->new InstructorDTO(tmp.getId(),tmp.getName(),tmp.getSurname())).collect(Collectors.toList());
+                .stream().map(tmp -> {
+                    InstructorDTO newOne = new InstructorDTO();
+                    newOne.setId(tmp.getId());
+                    newOne.setName(tmp.getName());
+                    newOne.setSurname(tmp.getSurname());
+                    return newOne;
+                }).collect(Collectors.toList());
     }
 
     @Override

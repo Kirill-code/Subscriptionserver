@@ -5,12 +5,6 @@ public class InstructorDTO {
 
     private String name, surname;
 
-    public InstructorDTO(long id, String name, String surname) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-    }
-
     public long getId() {
         return id;
     }

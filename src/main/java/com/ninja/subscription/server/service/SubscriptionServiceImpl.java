@@ -36,11 +36,11 @@ public class SubscriptionServiceImpl implements SubscriptionService {
        SubscriptionDTO test= new SubscriptionDTO();
                 test.setId(temp.getId());
                 test.setPrice(temp.getPrice());
-                test.setAssociatedUserId(temp.getAssociatedUser().getUid()
+                test.setAssociatedUserId(temp.getAssociatedFirebaseUsers().getUid()
                 );
-                test.setUserName(temp.getAssociatedUser().getName());
-                test.setUserSurName(temp.getAssociatedUser().getSurname());
-                test.setUserMobile(temp.getAssociatedUser().getMobile());
+                test.setUserName(temp.getAssociatedFirebaseUsers().getName());
+                test.setUserSurName(temp.getAssociatedFirebaseUsers().getSurname());
+                test.setUserMobile(temp.getAssociatedFirebaseUsers().getMobile());
                 test.setDescription(temp.getDescription());
                 test.setSaleDate(temp.getSaleDate());
                 test.setFinishDate(temp.getFinishDate());

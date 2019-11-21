@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="user")
 @Proxy(lazy = false)
-public class User {
+public class FirebaseUsers {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "user_id")
