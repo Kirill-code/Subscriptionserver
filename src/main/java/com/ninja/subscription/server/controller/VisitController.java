@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
 import java.util.logging.Logger;
 
 @RestController
@@ -35,12 +35,12 @@ public class VisitController {
 
     @RequestMapping(value = "/instructorgrouped", method = RequestMethod.GET)
     @ResponseBody
-    public Set<VisitDateDTO> VisitController() {
+    public ArrayList<VisitDateDTO> VisitController() {
         Logger log = Logger.getLogger(UserController.class.getName());
 
         log.info(" Controller error: " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
 
-Set<VisitDateDTO> tmp=service.getAll();
+ArrayList<VisitDateDTO> tmp=service.getAll();
         System.out.println("Hello");
         return tmp;
     }

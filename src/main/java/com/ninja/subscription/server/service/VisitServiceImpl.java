@@ -9,11 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 @Service
 public class VisitServiceImpl implements VisitService {
@@ -23,14 +20,21 @@ public class VisitServiceImpl implements VisitService {
     VisitDateRepository visitRepository;
 
     @Override
-    public Set<VisitDateDTO> getAll() {
+    public ArrayList<VisitDateDTO> getAll() {
         List<VisitDate> tempList=visitRepository.visitsGrouped();
         Logger log = Logger.getLogger(UserController.class.getName());
 
-        log.info(" visited: " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
+        log.info(" Instructors chart generated : " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
+        ArrayList cats = new ArrayList();
 
-        return tempList.stream().map(vd->new VisitDateDTO(vd.getId(),vd.getDate(),vd.getTime())).collect(Collectors.toSet());
-      // return visitRepository.findAll();
+
+        for (int i=0;i<tempList.size();i++){
+           cats.add(tempList.get(i));
+        }
+
+//check why can't stream this list
+        return cats;
+
     }
 
     @Override
