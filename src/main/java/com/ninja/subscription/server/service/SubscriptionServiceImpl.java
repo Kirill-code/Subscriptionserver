@@ -1,15 +1,16 @@
 package com.ninja.subscription.server.service;
 
+import com.ninja.subscription.server.controller.UserController;
 import com.ninja.subscription.server.model.Subscription;
-import com.ninja.subscription.server.model.VisitDate;
 import com.ninja.subscription.server.model.dto.SubscriptionDTO;
 import com.ninja.subscription.server.model.dto.VisitDateDTO;
 import com.ninja.subscription.server.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,8 +25,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     public SubscriptionDTO getByUidDto(String uid) {
 
         Subscription temp=subRepository.findByUid(uid,Boolean.TRUE);
-
-        Set<VisitDate> visits=temp.getVisitDates();
 /*
        VisitDate crD=new VisitDate();
         crD.setDate(current);
@@ -48,6 +47,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 test.setInstrName(temp.getAssociatedInstructor().getName());
                 test.setInstrSurname(temp.getAssociatedInstructor().getSurname());
                 test.setVisitDates( temp.getVisitDates().stream().map(vd->new VisitDateDTO(vd.getId(),vd.getDate(),vd.getTime())).collect(Collectors.toSet()));
+        Logger log = Logger.getLogger(UserController.class.getName());
+
+        log.info(" Subscriptions - : " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
+
         return test;
     }
     public Subscription convertDTO2Sub(SubscriptionDTO subscriptionDTO){
