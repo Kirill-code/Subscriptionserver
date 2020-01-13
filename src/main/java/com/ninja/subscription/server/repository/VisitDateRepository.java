@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 public interface VisitDateRepository extends JpaRepository<VisitDate, Long> {
       Logger log = Logger.getLogger(UserController.class.getName());
-
-    @Query("SELECT COUNT(v.id), v.instr_id, instructor.name, instructor.surname FROM VisitDate v,Instructor instructor  GROUP BY v.instr_id")
+      
+      @Query("SELECT COUNT(d.id), i.name, i.surname FROM Instructor i JOIN i.visitInstr d GROUP BY i.name")
     List<VisitDate> visitsGrouped();
 }
