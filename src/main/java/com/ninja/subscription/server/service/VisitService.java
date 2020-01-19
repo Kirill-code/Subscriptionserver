@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public interface VisitService {
     ArrayList<VisitDateDTO> getAll();
     VisitDate getByID(long id);
-    VisitDate save(VisitDate visit);
+    boolean save(String visit);
     void remove(long id);
    // List<VisitDateDTO> getGrpouped();
 

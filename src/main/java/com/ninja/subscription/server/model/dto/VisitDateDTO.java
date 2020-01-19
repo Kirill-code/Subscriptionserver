@@ -3,8 +3,8 @@ package com.ninja.subscription.server.model.dto;
 import java.util.Date;
 
 public class VisitDateDTO {
-    private long id, time;
-
+    private long id, time, instr_id;
+    private String uid;
 
     private Date date;
 
@@ -12,6 +12,22 @@ public class VisitDateDTO {
         this.id = id;
         this.date = date;
         this.time = time;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public long getInstr_id() {
+        return instr_id;
+    }
+
+    public void setInstr_id(long instr_id) {
+        this.instr_id = instr_id;
     }
 
     public long getTime() {

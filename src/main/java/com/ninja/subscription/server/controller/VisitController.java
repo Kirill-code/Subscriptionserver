@@ -1,7 +1,7 @@
 package com.ninja.subscription.server.controller;
 
-import com.ninja.subscription.server.model.Utils;
-import com.ninja.subscription.server.model.VisitDate;
+import com.ninja.subscription.server.model.FirebaseProvider;
+import com.ninja.subscription.server.model.IdentityProvider;
 import com.ninja.subscription.server.model.dto.VisitDateDTO;
 import com.ninja.subscription.server.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,32 +17,17 @@ public class VisitController {
     @Autowired
     private VisitService service;
 
-//    private static Logger log = Logger.getLogger(SubscriptionController.class.getName());
-
-    Utils checker = new Utils();
-    /*//TODO check which methods delete
-    @RequestMapping(value = "/visits", method = RequestMethod.GET)
-    @ResponseBody
-    public List<VisitDate> getAllSubscriptioners() {
-        return service.getAll();
-    }*/
-
     @RequestMapping(value = "/savenewvisit", method = RequestMethod.POST)
     @ResponseBody
-    public VisitDate saveRemider(@RequestBody VisitDate visitDate) {
-        return service.save(visitDate);
+    public boolean saveRemider(@RequestBody String visit) {
+
+        return service.save(visit);
     }
 
     @RequestMapping(value = "/instructorgrouped", method = RequestMethod.GET)
     @ResponseBody
-    public ArrayList<VisitDateDTO> VisitController() {
-        Logger log = Logger.getLogger(UserController.class.getName());
-
-        log.info(" Controller error: " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
-
-ArrayList<VisitDateDTO> tmp=service.getAll();
-        System.out.println("Hello");
-        return tmp;
+    public ArrayList<VisitDateDTO> visitsEndpoint() {
+        return service.getAll();
     }
 
 }

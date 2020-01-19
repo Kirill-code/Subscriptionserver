@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Service
 public class SubscriptionServiceImpl implements SubscriptionService {
 
-    Date current=new java.sql.Date(System.currentTimeMillis());
+    Date current = new java.sql.Date(System.currentTimeMillis());
 
     @Autowired
     SubscriptionRepository subRepository;
@@ -24,37 +24,31 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     @Override
     public SubscriptionDTO getByUidDto(String uid) {
 
-        Subscription temp=subRepository.findByUid(uid,Boolean.TRUE);
-/*
-       VisitDate crD=new VisitDate();
-        crD.setDate(current);
-        crD.setInstr_id(1);
+        Subscription temp = subRepository.findByUid(uid, Boolean.TRUE);
 
-        visits.add(crD);
-        temp.setVisitDates(visits);*/
-       SubscriptionDTO test= new SubscriptionDTO();
-                test.setId(temp.getId());
-                test.setPrice(temp.getPrice());
-                test.setAssociatedUserId(temp.getAssociatedFirebaseUsers().getUid()
-                );
-                test.setUserName(temp.getAssociatedFirebaseUsers().getName());
-                test.setUserSurName(temp.getAssociatedFirebaseUsers().getSurname());
-                test.setUserMobile(temp.getAssociatedFirebaseUsers().getMobile());
-                test.setDescription(temp.getDescription());
-                test.setSaleDate(temp.getSaleDate());
-                test.setFinishDate(temp.getFinishDate());
-                test.setInstructorId(temp.getAssociatedInstructor().getId());
-                test.setInstrName(temp.getAssociatedInstructor().getName());
-                test.setInstrSurname(temp.getAssociatedInstructor().getSurname());
-                test.setVisitDates( temp.getVisitDates().stream().map(vd->new VisitDateDTO(vd.getId(),vd.getDate(),vd.getTime())).collect(Collectors.toSet()));
+        SubscriptionDTO test = new SubscriptionDTO();
+        test.setId(temp.getId());
+        test.setPrice(temp.getPrice());
+        test.setAssociatedUserId(temp.getAssociatedFirebaseUsers().getUid());
+        test.setUserName(temp.getAssociatedFirebaseUsers().getName());
+        test.setUserSurName(temp.getAssociatedFirebaseUsers().getSurname());
+        test.setUserMobile(temp.getAssociatedFirebaseUsers().getMobile());
+        test.setDescription(temp.getDescription());
+        test.setSaleDate(temp.getSaleDate());
+        test.setFinishDate(temp.getFinishDate());
+        test.setInstructorId(temp.getAssociatedInstructor().getId());
+        test.setInstrName(temp.getAssociatedInstructor().getName());
+        test.setInstrSurname(temp.getAssociatedInstructor().getSurname());
+        test.setVisitDates(temp.getVisitDates().stream().map(vd -> new VisitDateDTO(vd.getId(), vd.getDate(), vd.getTime())).collect(Collectors.toSet()));
         Logger log = Logger.getLogger(UserController.class.getName());
 
-        log.info(" Subscriptions - : " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
+        log.info(" Subscription " + uid + " selected - : " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
 
         return test;
     }
-    public Subscription convertDTO2Sub(SubscriptionDTO subscriptionDTO){
-        Subscription temp=new Subscription();
+
+    public Subscription convertDTO2Sub(SubscriptionDTO subscriptionDTO) {
+        Subscription temp = new Subscription();
         temp.setPrice(subscriptionDTO.getPrice());
         temp.setDescription(subscriptionDTO.getDescription());
         temp.setSaleDate(subscriptionDTO.getSaleDate());
@@ -65,6 +59,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     public Subscription save(Subscription sub) {
+        System.out.println("test");
         return subRepository.saveAndFlush(sub);
     }
 
