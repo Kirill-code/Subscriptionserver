@@ -19,8 +19,6 @@ public class SubscriptionController {
     @Autowired
     private SubscriptionService service;
 
-    private static Logger log = Logger.getLogger(SubscriptionController.class.getName());
-
     IdentityProvider checker = new FirebaseProvider();
 
     @RequestMapping(value = "/verify", method = RequestMethod.GET)
@@ -55,8 +53,8 @@ public class SubscriptionController {
 
     @RequestMapping(value = "/insertsubscription", method = RequestMethod.POST)
     @ResponseBody
-    public void createSubscription(@RequestBody SubscriptionDTO subscription) {
-        service.insertNew(subscription);
+    public void createSubscription() {
+        service.insertNew();
     }
 
 

@@ -28,7 +28,7 @@ public class VisitServiceImpl implements VisitService {
     public ArrayList<VisitDateDTO> getAll() {
         List<VisitDate> tempList = visitRepository.visitsGrouped();
 
-        log.info(" Instructors chart generated : " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
+        log.info(" Instructors chart generated : " + new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
         ArrayList cats = new ArrayList();
 
         for (int i = 0; i < tempList.size(); i++) {
@@ -65,7 +65,7 @@ public class VisitServiceImpl implements VisitService {
             temp.setAssociatedSub(tempSub);
             temp.setDate(new Date(System.currentTimeMillis()));
             visitRepository.saveAndFlush(temp);
-            log.info(" New date inserted for " + visit + ": " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
+            log.info(" New date inserted for " + visit + ": " + new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
             result = true;
         } catch (Exception e) {
             result = false;

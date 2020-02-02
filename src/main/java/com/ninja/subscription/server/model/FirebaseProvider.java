@@ -19,10 +19,10 @@ public class FirebaseProvider implements IdentityProvider{
         try {
             decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
 
-            log.info(decodedToken.getEmail() + " logged at " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
+            log.info(decodedToken.getEmail() + " logged at " + new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
             result = true;
         } catch (FirebaseAuthException e) {
-            log.info("Auth error at " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
+            log.info("Auth error at " + new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
 
             e.printStackTrace();
             result = false;

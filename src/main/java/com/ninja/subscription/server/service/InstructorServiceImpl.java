@@ -29,6 +29,7 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public Instructor getByID(long id) {
+        System.out.println("Hello From Insrt");
         return instructorRepository.getOne(id);
     }
 

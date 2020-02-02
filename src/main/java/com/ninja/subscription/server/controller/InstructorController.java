@@ -20,10 +20,10 @@ public class InstructorController {
         return service.getAll();
     }
 
-    @RequestMapping(value = "/newinstructor", method = RequestMethod.POST)
+    @RequestMapping(value = "/newinstructor/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Instructor saveInstructors(@RequestBody Instructor instructor) {
-        return service.save(instructor);
+    public Instructor saveInstructors(@PathVariable ("id") long id) {
+        return service.getByID(id);
     }
 
     @RequestMapping(value = "/instructors/{id}", method = RequestMethod.DELETE)

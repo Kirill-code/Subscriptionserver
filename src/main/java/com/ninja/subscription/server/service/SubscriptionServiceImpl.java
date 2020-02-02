@@ -1,6 +1,7 @@
 package com.ninja.subscription.server.service;
 
 import com.ninja.subscription.server.controller.UserController;
+import com.ninja.subscription.server.model.FirebaseUsers;
 import com.ninja.subscription.server.model.Subscription;
 import com.ninja.subscription.server.model.dto.SubscriptionDTO;
 import com.ninja.subscription.server.model.dto.VisitDateDTO;
@@ -20,6 +21,9 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Autowired
     SubscriptionRepository subRepository;
+
+    @Autowired
+    private UserService service;
 
     @Override
     public SubscriptionDTO getByUidDto(String uid) {
@@ -42,7 +46,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         test.setVisitDates(temp.getVisitDates().stream().map(vd -> new VisitDateDTO(vd.getId(), vd.getDate(), vd.getTime())).collect(Collectors.toSet()));
         Logger log = Logger.getLogger(UserController.class.getName());
 
-        log.info(" Subscription " + uid + " selected - : " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
+        log.info(" Subscription " + uid + " selected - : " + new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
 
         return test;
     }
@@ -65,11 +69,16 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 
     @Override
-    public void insertNew(SubscriptionDTO subscription) {
-        //TODO create new user in FireBase
+    public void insertNew() {
+        Subscription newSub=new Subscription();
 
+        InstructorServiceImpl instructor=new InstructorServiceImpl();
 
-        save(convertDTO2Sub(subscription));
+        FirebaseUsers tmp=service.getByEmail("test@test.com");
+         newSub.setAssociatedFirebaseUsers(tmp);
+        newSub.setAssociatedInstructor(instructor.getByID(3));
+        System.out.println("Hihi");
+        //subRepository.saveAndFlush(newSub);
     }
 
     @Override

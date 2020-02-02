@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface UserService {
     List<FirebaseUsers> getAll();
-
+    FirebaseUsers getByEmail(String email);
+    FirebaseUsers newUser(FirebaseUsers user);
 }
