@@ -9,6 +9,7 @@ import com.ninja.subscription.server.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Logger;
@@ -24,6 +25,9 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Autowired
     private UserService service;
+
+    @Autowired
+    private InstructorService instructorService;
 
     @Override
     public SubscriptionDTO getByUidDto(String uid) {
@@ -67,23 +71,30 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         return subRepository.saveAndFlush(sub);
     }
 
+    @Override
+    public void remove(long id) {
+
+    }
 
     @Override
     public void insertNew() {
         Subscription newSub=new Subscription();
+            newSub.setCurrent(true);
+            newSub.setDescription("Sint test");
+            /*
+            * взять все абонементы пользователя и проверить
+            * */
 
-        InstructorServiceImpl instructor=new InstructorServiceImpl();
+            newSub.setFinishDate(new Date(System.currentTimeMillis()));
+            newSub.setCount(0);
+            newSub.setSaleDate(new Date(System.currentTimeMillis()));
+            newSub.setPrice(1200);
+            newSub.setAssociatedFirebaseUsers(service.getByEmail("test@test.com"));
+            newSub.setAssociatedInstructor(instructorService.getByID(3));
 
-        FirebaseUsers tmp=service.getByEmail("test@test.com");
-         newSub.setAssociatedFirebaseUsers(tmp);
-        newSub.setAssociatedInstructor(instructor.getByID(3));
-        System.out.println("Hihi");
-        //subRepository.saveAndFlush(newSub);
+        subRepository.saveAndFlush(newSub);
     }
 
-    @Override
-    public void remove(long id) {
-        subRepository.delete(id);
-    }
+
 
 }

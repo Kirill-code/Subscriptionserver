@@ -7,15 +7,14 @@ import com.ninja.subscription.server.model.FirebaseUsers;
 
 import com.ninja.subscription.server.model.IdentityProvider;
 import com.ninja.subscription.server.model.dto.SubscriptionDTO;
+import com.ninja.subscription.server.model.dto.UsersDTO;
 import com.ninja.subscription.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 @RestController
@@ -51,8 +50,8 @@ public class UserController {
 
     @RequestMapping(value = "/admins", method = RequestMethod.GET)
     @ResponseBody
-    public List<FirebaseUsers> getAdmins(@RequestHeader("token") String idToken) {
-        List<FirebaseUsers> list = new ArrayList<>();
+    public List<UsersDTO> getAdmins(@RequestHeader("token") String idToken) {
+        List<UsersDTO> list = new ArrayList<>();
         if (Boolean.TRUE.equals(chcker.checkUsers(idToken))) {
             // Start listing users from the beginning, 1000 at a time.
             try {
@@ -60,56 +59,66 @@ public class UserController {
                 //Create list of Sub Users with data from Firebase: user - firebase object
                 while (page != null) {
                     for (ExportedUserRecord user : page.getValues()) {
-                        FirebaseUsers tempUser=new FirebaseUsers();
+                        UsersDTO tempUser=new UsersDTO();
                         tempUser.setUid(user.getUid());
                         tempUser.setEmail(user.getEmail());
+                        tempUser.setClaim((Boolean) user.getCustomClaims().get("instructor")!=null?true:false);
                         list.add(tempUser);
                     }
                     page = page.getNextPage();
                 }
+
             } catch (FirebaseAuthException e) {
                 e.printStackTrace();
             }
             log.info(" Users list sent " + new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
 
-        } else {
-            FirebaseUsers tempUser=new FirebaseUsers();
+       } else {
+            UsersDTO tempUser=new UsersDTO();
             tempUser.setUid("Auth");
             tempUser.setEmail("Error");
             list.add(tempUser);
         }
+        Collections.sort(list, Collections.reverseOrder());
 
         return list;
     }
     @RequestMapping(value = "/adminclaim", method = RequestMethod.POST)
     @ResponseBody
-    public String setAdminClaim(@RequestHeader("token") String idToken, @RequestHeader("uid") String uid) throws FirebaseAuthException {
-        //TODO go to AUTH interface
-        String result="Success";
-        UserRecord.UpdateRequest request = new UserRecord.UpdateRequest(uid)
-                .setEmail("user2@example.com");
+    public String setAdminClaim(@RequestHeader("token") String idToken, @RequestHeader("uid") String uid) {
+       String result;
+       try{
+           Map<String, Object> claims = new HashMap<>();
+           claims.put("instructor", true);
+           FirebaseAuth.getInstance().setCustomUserClaims(uid, claims);
+           result="Claims added";
 
-        UserRecord userRecord = FirebaseAuth.getInstance().updateUser(request);
-        /*if (Boolean.TRUE.equals(chcker.checkUsers(idToken))) {
+           log.info(" Claims added for  "+uid+" " + new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
+
+       }catch (FirebaseAuthException ex){
+           result="Claim error";
+       }
+
+
+        return result;
+    }
+    @RequestMapping(value = "/removeadminclaim", method = RequestMethod.DELETE)
+    @ResponseBody
+    public String renoveAdminClaim(@RequestHeader("token") String idToken, @RequestHeader("uid") String uid)  {
+        String result;
+        try{
             Map<String, Object> claims = new HashMap<>();
-            claims.put("admin", true);
+            claims.remove("instructor", true);
+            FirebaseAuth.getInstance().setCustomUserClaims(uid, claims);
+            result="Claims removed";
 
-            try {
-                UserRecord user = FirebaseAuth.getInstance().getUser(uid);
+            log.info(" Claims removed for  "+uid+" " + new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
 
-                if (Boolean.TRUE.equals(user.getCustomClaims().get("admin"))) {
-                    resUser=new User("uid","unsuccess. User existed");
-                }else {
-                    FirebaseAuth.getInstance().setCustomUserClaims(uid, claims);
-                    resUser=new User("uid","success");
-                    log.info(uid+" admnis rights assigned " + new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date()));
-                }
-            } catch (FirebaseAuthException e) {
-                e.printStackTrace();
-                resUser=new User("","wrong user");
-            }
-        }else{
-        resUser=new User("","wrong user");}*/
+        }catch (FirebaseAuthException ex){
+            result="Claim error";
+        }
+
+
         return result;
     }
 }

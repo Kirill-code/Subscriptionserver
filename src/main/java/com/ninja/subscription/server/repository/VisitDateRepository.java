@@ -14,4 +14,7 @@ public interface VisitDateRepository extends JpaRepository<VisitDate, Long> {
 
       @Query("SELECT COUNT(d.id), i.name, i.surname FROM Instructor i JOIN i.visitInstr d GROUP BY i.name")
     List<VisitDate> visitsGrouped();
+    @Query("SELECT COUNT(d.id), i.name, i.surname FROM Instructor i JOIN i.visitInstr d GROUP BY i.name")
+    List<VisitDate> visitsByDate();
+
 }

@@ -21,6 +21,9 @@ public class Instructor {
     @Column(name = "surname", nullable = false)
     private String surname;
 
+    @Column(name = "uid", nullable = false)
+    private String uid;
+
     public List<Subscription> getInstructorSubscriptions() {
         return instructorSubscriptions;
     }
@@ -58,5 +61,13 @@ public class Instructor {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }
