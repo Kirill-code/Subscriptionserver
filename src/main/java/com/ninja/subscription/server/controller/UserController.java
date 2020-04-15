@@ -33,16 +33,7 @@ public class UserController {
     public FirebaseUsers createNewUser(@RequestBody FirebaseUsers user) {
 
         return service.newUser(user);
-    }
-
-
-    @RequestMapping(value = "/email", method = RequestMethod.GET)
-    @ResponseBody
-    public FirebaseUsers getUserByEmail(/*@RequestHeader("token") String idToken,*/@RequestHeader("email") String email) {
-       /* if (Boolean.TRUE.equals(checker.checkUsers(idToken))) {
-        }*/
-        return service.getByEmail(email);
-    }
+  }
 
     private static Logger log = Logger.getLogger(UserController.class.getName());
 

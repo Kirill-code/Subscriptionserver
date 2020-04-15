@@ -57,6 +57,7 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public boolean save(String visit) {
+        //todo compare current date with finish
         boolean result;
         try {
             Subscription tempSub = subRepository.findByUid(visit, Boolean.TRUE);
@@ -78,5 +79,10 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public void remove(long id) {
         visitRepository.delete(id);
+    }
+
+    @Override
+    public List<VisitDateDTO> visitsByDate(long instr_id, Date date) {
+        return visitRepository.visitsByDate(instr_id,date);
     }
 }
