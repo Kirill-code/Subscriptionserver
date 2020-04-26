@@ -12,6 +12,6 @@ public interface VisitService {
     VisitDate getByID(long id);
     boolean save(String visit);
     void remove(long id);
-   List<VisitDateDTO> visitsByDate(long instr_id, Date date);
+   List<VisitDateDTO> visitsByDate(long instr_id, Date dateStart, Date dateEnd);
 
 }

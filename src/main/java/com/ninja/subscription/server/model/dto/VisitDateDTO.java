@@ -8,10 +8,11 @@ public class VisitDateDTO {
 
     private Date date;
 
-    public VisitDateDTO(long id, Date date, long time) {
+    public VisitDateDTO(long id, Date date, long time, long instr_id) {
         this.id = id;
         this.date = date;
         this.time = time;
+        this.instr_id=instr_id;
     }
 
     public String getUid() {

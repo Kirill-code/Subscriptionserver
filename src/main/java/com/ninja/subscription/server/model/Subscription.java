@@ -24,8 +24,6 @@ public class Subscription {
     @Temporal(TemporalType.DATE)
     private Date finishDate;
 
-    @Column(name = "price", nullable = false)
-    private long price;
 
     @Column(name = "description", nullable = false)
     private String description;
@@ -46,10 +44,24 @@ public class Subscription {
 
     @Column(name = "count", nullable = false)
     private int count;
+
+    @ManyToOne
+    @JoinColumn(name="price_id")
+    private Price associatedPrice;
+
+
     /*********************
      * Getters and Setters
      *
      ********************/
+    public Price getAssociatedPrice() {
+        return associatedPrice;
+    }
+
+    public void setAssociatedPrice(Price associatedPrice) {
+        this.associatedPrice = associatedPrice;
+    }
+
 
     public Instructor getAssociatedInstructor() {
         return associatedInstructor;
@@ -104,14 +116,6 @@ public class Subscription {
 
     public void setFinishDate(Date finishDate) {
         this.finishDate = finishDate;
-    }
-
-    public long getPrice() {
-        return price;
-    }
-
-    public void setPrice(long price) {
-        this.price = price;
     }
 
     public String getDescription() {

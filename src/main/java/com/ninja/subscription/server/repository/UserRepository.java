@@ -1,7 +1,6 @@
 package com.ninja.subscription.server.repository;
 
 import com.ninja.subscription.server.model.FirebaseUsers;
-import com.ninja.subscription.server.model.Subscription;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

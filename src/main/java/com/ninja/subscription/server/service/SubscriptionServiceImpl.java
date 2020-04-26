@@ -36,7 +36,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
         SubscriptionDTO test = new SubscriptionDTO();
         test.setId(temp.getId());
-        test.setPrice(temp.getPrice());
+        test.setPrice(temp.getAssociatedPrice().getCost());
         test.setAssociatedUserId(temp.getAssociatedFirebaseUsers().getUid());
         test.setUserName(temp.getAssociatedFirebaseUsers().getName());
         test.setUserSurName(temp.getAssociatedFirebaseUsers().getSurname());
@@ -47,7 +47,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         test.setInstructorId(temp.getAssociatedInstructor().getId());
         test.setInstrName(temp.getAssociatedInstructor().getName());
         test.setInstrSurname(temp.getAssociatedInstructor().getSurname());
-        test.setVisitDates(temp.getVisitDates().stream().map(vd -> new VisitDateDTO(vd.getId(), vd.getDate(), vd.getTime())).collect(Collectors.toSet()));
+        test.setVisitDates(temp.getVisitDates().stream().map(vd -> new VisitDateDTO(vd.getId(), vd.getDate(),vd.getInstr_id(), vd.getTime())).collect(Collectors.toSet()));
         Logger log = Logger.getLogger(UserController.class.getName());
 
         log.info(" Subscription " + uid + " selected - : " + new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
@@ -55,7 +55,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         return test;
     }
 
-    public Subscription convertDTO2Sub(SubscriptionDTO subscriptionDTO) {
+   /* public Subscription convertDTO2Sub(SubscriptionDTO subscriptionDTO) {
         Subscription temp = new Subscription();
         temp.setPrice(subscriptionDTO.getPrice());
         temp.setDescription(subscriptionDTO.getDescription());
@@ -63,11 +63,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         temp.setFinishDate(subscriptionDTO.getFinishDate());
 
         return temp;
-    }
+    }*/
 
     @Override
     public Subscription save(Subscription sub) {
-        System.out.println("test");
         return subRepository.saveAndFlush(sub);
     }
 
@@ -88,7 +87,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
             newSub.setFinishDate(new Date(System.currentTimeMillis()));
             newSub.setCount(0);
             newSub.setSaleDate(new Date(System.currentTimeMillis()));
-            newSub.setPrice(1200);
+            //newSub.setPrice(1200);
             newSub.setAssociatedFirebaseUsers(service.getByEmail("test@test.com"));
             newSub.setAssociatedInstructor(instructorService.getByID(3));
 

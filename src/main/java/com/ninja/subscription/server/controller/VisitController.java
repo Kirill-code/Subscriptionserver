@@ -37,11 +37,13 @@ public class VisitController {
 
     @RequestMapping(value = "/visitsbydate", method = RequestMethod.GET)
     @ResponseBody
-    public List<VisitDateDTO> visitsbydate(@RequestHeader("instid") long instr_id ,@RequestHeader("date") String date) {
+    public List<VisitDateDTO> visitsbydate(@RequestHeader("instid") long instr_id ,@RequestHeader("dateStart") String dateStart,@RequestHeader("dateEnd") String dateEnd) {
        List<VisitDateDTO> result;
        try{
-           Date converted=new SimpleDateFormat("yyyy-MM-dd").parse(date);
-           result=service.visitsByDate(instr_id, converted);
+           Date convertedStart=new SimpleDateFormat("yyyy-MM-dd").parse(dateStart);
+           Date convertedEnd=new SimpleDateFormat("yyyy-MM-dd").parse(dateEnd);
+
+           result=service.visitsByDate(instr_id, convertedStart,convertedEnd);
        }catch (ParseException ex){
            log.info(" Wrong date : " + new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date())+ex.getMessage());
            result=null;

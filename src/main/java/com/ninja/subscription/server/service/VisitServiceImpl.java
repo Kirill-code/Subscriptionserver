@@ -82,7 +82,7 @@ public class VisitServiceImpl implements VisitService {
     }
 
     @Override
-    public List<VisitDateDTO> visitsByDate(long instr_id, Date date) {
-        return visitRepository.visitsByDate(instr_id,date);
+    public List<VisitDateDTO> visitsByDate(long instr_id, Date dateStart, Date dateEnd) {
+        return visitRepository.visitsByDate(instr_id,dateStart,dateEnd);
     }
 }
