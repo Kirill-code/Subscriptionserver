@@ -14,4 +14,9 @@ public class PriceServiceImpl implements PriceService  {
     public List<Price> getAll() {
         return repository.findAll();
     }
+
+    @Override
+    public Price getByID(long id) {
+        return repository.findOne(id);
+    }
 }

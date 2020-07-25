@@ -1,3 +1,4 @@
 /target/
 /src/main/resources/token.json
 /.idea/
+/out/artifacts/unnamed/unnamed.war

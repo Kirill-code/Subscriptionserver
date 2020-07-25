@@ -8,6 +8,8 @@ import java.util.List;
 public interface InstructorService {
     List<InstructorDTO> getAll();
     Instructor getByID(long id);
-    Instructor save(Instructor instructor);
+    boolean save(InstructorDTO instructor);
     void remove(long id);
+
+    InstructorDTO getByUidDto(String instructorUID);
 }

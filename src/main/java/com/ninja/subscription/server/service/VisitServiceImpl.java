@@ -4,7 +4,7 @@ package com.ninja.subscription.server.service;
 import com.ninja.subscription.server.controller.UserController;
 import com.ninja.subscription.server.model.Subscription;
 import com.ninja.subscription.server.model.VisitDate;
-import com.ninja.subscription.server.model.dto.SubscriptionDTO;
+import com.ninja.subscription.server.model.dto.GroupedVisitDatesDTO;
 import com.ninja.subscription.server.model.dto.VisitDateDTO;
 import com.ninja.subscription.server.repository.SubscriptionRepository;
 import com.ninja.subscription.server.repository.VisitDateRepository;
@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 @Service
 public class VisitServiceImpl implements VisitService {
-    Logger log = Logger.getLogger(UserController.class.getName());
+    Logger log = Logger.getLogger(VisitServiceImpl.class.getName());
 
     @Autowired
     VisitDateRepository visitRepository;
@@ -82,7 +82,8 @@ public class VisitServiceImpl implements VisitService {
     }
 
     @Override
-    public List<VisitDateDTO> visitsByDate(long instr_id, Date dateStart, Date dateEnd) {
+    public List<GroupedVisitDatesDTO> visitsByDate(long instr_id, Date dateStart, Date dateEnd) {
+        log.info(" Visits sent for "+instr_id+": " + new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
         return visitRepository.visitsByDate(instr_id,dateStart,dateEnd);
     }
 }

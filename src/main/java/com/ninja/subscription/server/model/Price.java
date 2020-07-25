@@ -19,6 +19,9 @@ public class Price {
     @Column(name = "cost", nullable = false)
     private long cost;
 
+    @Column(name = "duration", nullable = false)
+    private int duration;
+
     public long getId() {
         return id;
     }
@@ -41,5 +44,13 @@ public class Price {
 
     public void setCost(long cost) {
         this.cost = cost;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }

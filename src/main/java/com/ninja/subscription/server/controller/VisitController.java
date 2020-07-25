@@ -2,6 +2,7 @@ package com.ninja.subscription.server.controller;
 
 import com.ninja.subscription.server.model.FirebaseProvider;
 import com.ninja.subscription.server.model.IdentityProvider;
+import com.ninja.subscription.server.model.dto.GroupedVisitDatesDTO;
 import com.ninja.subscription.server.model.dto.VisitDateDTO;
 import com.ninja.subscription.server.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,8 @@ public class VisitController {
 
     @RequestMapping(value = "/visitsbydate", method = RequestMethod.GET)
     @ResponseBody
-    public List<VisitDateDTO> visitsbydate(@RequestHeader("instid") long instr_id ,@RequestHeader("dateStart") String dateStart,@RequestHeader("dateEnd") String dateEnd) {
-       List<VisitDateDTO> result;
+    public List<GroupedVisitDatesDTO> visitsbydate(@RequestHeader("instid") long instr_id , @RequestHeader("dateStart") String dateStart, @RequestHeader("dateEnd") String dateEnd) {
+       List<GroupedVisitDatesDTO> result;
        try{
            Date convertedStart=new SimpleDateFormat("yyyy-MM-dd").parse(dateStart);
            Date convertedEnd=new SimpleDateFormat("yyyy-MM-dd").parse(dateEnd);

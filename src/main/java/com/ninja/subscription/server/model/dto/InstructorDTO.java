@@ -3,7 +3,7 @@ package com.ninja.subscription.server.model.dto;
 public class InstructorDTO {
     private long id;
 
-    private String name, surname;
+    private String name, surname, uid;
 
     public long getId() {
         return id;
@@ -27,5 +27,13 @@ public class InstructorDTO {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

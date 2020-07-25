@@ -54,6 +54,7 @@ public class UserController {
                         tempUser.setUid(user.getUid());
                         tempUser.setEmail(user.getEmail());
                         tempUser.setClaim((Boolean) user.getCustomClaims().get("instructor")!=null?true:false);
+                        tempUser.setDisplayedName(user.getDisplayName());
                         list.add(tempUser);
                     }
                     page = page.getNextPage();
@@ -95,7 +96,7 @@ public class UserController {
     }
     @RequestMapping(value = "/removeadminclaim", method = RequestMethod.DELETE)
     @ResponseBody
-    public String renoveAdminClaim(@RequestHeader("token") String idToken, @RequestHeader("uid") String uid)  {
+    public String removeAdminClaim(@RequestHeader("token") String idToken, @RequestHeader("uid") String uid)  {
         String result;
         try{
             Map<String, Object> claims = new HashMap<>();

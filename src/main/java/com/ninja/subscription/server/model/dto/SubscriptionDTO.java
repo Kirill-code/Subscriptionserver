@@ -9,15 +9,16 @@ public class SubscriptionDTO {
 
     private long id,
             price,
-            instructorId;
+            instructorId,
+            associatedUserId;
 
-    private String associatedUserId,
+    private String
             userName,
             userSurName,
             userMobile,
             description,
             instrName,
-            instrSurname;
+            instrSurname, uid;
 
     private Set<VisitDateDTO> visitDates = new HashSet<>();
 
@@ -65,10 +66,6 @@ public class SubscriptionDTO {
         this.instructorId = instructorId;
     }
 
-    public void setAssociatedUserId(String associatedUserId) {
-        this.associatedUserId= associatedUserId;
-    }
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -76,6 +73,7 @@ public class SubscriptionDTO {
     public void setInstrName(String instrName) {
         this.instrName = instrName;
     }
+
     public void setInstrSurname(String instrSurname) {
         this.instrSurname = instrSurname;
     }
@@ -104,10 +102,6 @@ public class SubscriptionDTO {
         return instructorId;
     }
 
-    public String getAssociatedUserId() {
-        return associatedUserId;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -124,4 +118,19 @@ public class SubscriptionDTO {
         return visitDates;
     }
 
+    public long getAssociatedUserId() {
+        return associatedUserId;
+    }
+
+    public void setAssociatedUserId(long associatedUserId) {
+        this.associatedUserId = associatedUserId;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 }

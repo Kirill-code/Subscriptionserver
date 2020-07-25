@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface PriceService {
     List<Price> getAll();
+    Price getByID(long id);
 }

@@ -2,21 +2,27 @@ package com.ninja.subscription.server.service;
 
 import com.ninja.subscription.server.controller.UserController;
 import com.ninja.subscription.server.model.FirebaseUsers;
+import com.ninja.subscription.server.model.Price;
 import com.ninja.subscription.server.model.Subscription;
 import com.ninja.subscription.server.model.dto.SubscriptionDTO;
 import com.ninja.subscription.server.model.dto.VisitDateDTO;
+import com.ninja.subscription.server.model.dto.incomeSubscriptionDTO;
+import com.ninja.subscription.server.repository.PriceRepository;
 import com.ninja.subscription.server.repository.SubscriptionRepository;
+import com.ninja.subscription.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
 public class SubscriptionServiceImpl implements SubscriptionService {
+    Logger log = Logger.getLogger(SubscriptionServiceImpl.class.getName());
 
     Date current = new java.sql.Date(System.currentTimeMillis());
 
@@ -24,50 +30,77 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     SubscriptionRepository subRepository;
 
     @Autowired
-    private UserService service;
+    private UserRepository userRepository;
 
     @Autowired
     private InstructorService instructorService;
 
+    @Autowired
+    PriceRepository priceRepository;
+
     @Override
     public SubscriptionDTO getByUidDto(String uid) {
+        SubscriptionDTO tempDTO = new SubscriptionDTO();
+        if(subRepository.findByUid(uid, Boolean.TRUE)!=null) {
 
-        Subscription temp = subRepository.findByUid(uid, Boolean.TRUE);
+            Subscription temp = subRepository.findByUid(uid, Boolean.TRUE);
 
-        SubscriptionDTO test = new SubscriptionDTO();
-        test.setId(temp.getId());
-        test.setPrice(temp.getAssociatedPrice().getCost());
-        test.setAssociatedUserId(temp.getAssociatedFirebaseUsers().getUid());
-        test.setUserName(temp.getAssociatedFirebaseUsers().getName());
-        test.setUserSurName(temp.getAssociatedFirebaseUsers().getSurname());
-        test.setUserMobile(temp.getAssociatedFirebaseUsers().getMobile());
-        test.setDescription(temp.getDescription());
-        test.setSaleDate(temp.getSaleDate());
-        test.setFinishDate(temp.getFinishDate());
-        test.setInstructorId(temp.getAssociatedInstructor().getId());
-        test.setInstrName(temp.getAssociatedInstructor().getName());
-        test.setInstrSurname(temp.getAssociatedInstructor().getSurname());
-        test.setVisitDates(temp.getVisitDates().stream().map(vd -> new VisitDateDTO(vd.getId(), vd.getDate(),vd.getInstr_id(), vd.getTime())).collect(Collectors.toSet()));
-        Logger log = Logger.getLogger(UserController.class.getName());
+            tempDTO.setId(temp.getId());
+            tempDTO.setPrice(temp.getAssociatedPrice().getCost());
+            tempDTO.setUid(temp.getAssociatedFirebaseUsers().getUid());
+            tempDTO.setUserName(temp.getAssociatedFirebaseUsers().getName());
+            tempDTO.setUserSurName(temp.getAssociatedFirebaseUsers().getSurname());
+            tempDTO.setUserMobile(temp.getAssociatedFirebaseUsers().getMobile());
+            tempDTO.setDescription(temp.getDescription());
+            tempDTO.setSaleDate(temp.getSaleDate());
+            tempDTO.setFinishDate(temp.getFinishDate());
+            tempDTO.setInstructorId(temp.getAssociatedInstructor().getId());
+            tempDTO.setInstrName(temp.getAssociatedInstructor().getName());
+            tempDTO.setInstrSurname(temp.getAssociatedInstructor().getSurname());
+            tempDTO.setVisitDates(temp.getVisitDates().stream().map(vd -> new VisitDateDTO(vd.getId(), vd.getDate(), vd.getInstr_id(), vd.getTime())).collect(Collectors.toSet()));
+            Logger log = Logger.getLogger(SubscriptionDTO.class.getName());
 
-        log.info(" Subscription " + uid + " selected - : " + new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
-
-        return test;
+            log.info(" Subscription " + uid + " selected - : " + new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
+        }
+        else {
+            tempDTO.setDescription("Subscription doesn't exist.");
+        }
+        return tempDTO;
     }
 
-   /* public Subscription convertDTO2Sub(SubscriptionDTO subscriptionDTO) {
+    public Subscription convertNewDTO2Sub(incomeSubscriptionDTO subscriptionDTO) {
+        //change to get correct one
+        Price price=priceRepository.findOne(subscriptionDTO.getPrice());
+
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate=calendar.getTime();
+        calendar.add(Calendar.DATE,  price.getDuration());
+        Date finishDate = calendar.getTime();
+
         Subscription temp = new Subscription();
-        temp.setPrice(subscriptionDTO.getPrice());
+        temp.setAssociatedFirebaseUsers(userRepository.getOne(subscriptionDTO.getAssociatedUserId()));
         temp.setDescription(subscriptionDTO.getDescription());
-        temp.setSaleDate(subscriptionDTO.getSaleDate());
-        temp.setFinishDate(subscriptionDTO.getFinishDate());
+        temp.setAssociatedPrice(price);
+        temp.setDescription(subscriptionDTO.getDescription());
+        //finish date getpriceDAYS+current
+        temp.setSaleDate(currentDate);
+        temp.setFinishDate(finishDate);
 
         return temp;
-    }*/
+    }
 
     @Override
-    public Subscription save(Subscription sub) {
-        return subRepository.saveAndFlush(sub);
+    public boolean save(incomeSubscriptionDTO sub) {
+        try{
+            subRepository.saveAndFlush(convertNewDTO2Sub(sub));
+            log.info( new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date())+" Subscription created" );
+
+            return true;
+        }catch (Exception ex){
+            log.warning(new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date())+" Subscription create failed : "+ex.getMessage());
+            return false;
+        }
+
     }
 
     @Override
@@ -75,24 +108,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     }
 
-    @Override
-    public void insertNew() {
-        Subscription newSub=new Subscription();
-            newSub.setCurrent(true);
-            newSub.setDescription("Sint test");
-            /*
-            * взять все абонементы пользователя и проверить
-            * */
-
-            newSub.setFinishDate(new Date(System.currentTimeMillis()));
-            newSub.setCount(0);
-            newSub.setSaleDate(new Date(System.currentTimeMillis()));
-            //newSub.setPrice(1200);
-            newSub.setAssociatedFirebaseUsers(service.getByEmail("test@test.com"));
-            newSub.setAssociatedInstructor(instructorService.getByID(3));
-
-        subRepository.saveAndFlush(newSub);
-    }
 
 
 

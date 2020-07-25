@@ -5,6 +5,7 @@ import com.ninja.subscription.server.model.FirebaseProvider;
 import com.ninja.subscription.server.model.IdentityProvider;
 import com.ninja.subscription.server.model.Subscription;
 import com.ninja.subscription.server.model.dto.SubscriptionDTO;
+import com.ninja.subscription.server.model.dto.incomeSubscriptionDTO;
 import com.ninja.subscription.server.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class SubscriptionController {
 
     @RequestMapping(value = "/verify", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Boolean> verifyUser(@RequestHeader("token") String idToken) {
+    public Map<String, Boolean> verifyUserToken(@RequestHeader("token") String idToken) {
         if (Boolean.TRUE.equals(checker.checkUsers(idToken))) {
             return Collections.singletonMap("success", true);
         } else return Collections.singletonMap("success", false);
@@ -32,10 +33,15 @@ public class SubscriptionController {
     @CrossOrigin
     @RequestMapping(value = "/uidsubscription/{uid}", method = RequestMethod.GET)
     @ResponseBody
-    public SubscriptionDTO getSubscriptioner(/*@RequestHeader("token") String idToken,*/@PathVariable("uid") String SubscriptionUID) {
-       /* if (Boolean.TRUE.equals(checker.checkUsers(idToken))) {
-        }*/
-        return service.getByUidDto(SubscriptionUID);
+    public SubscriptionDTO getSubscriptioner(@RequestHeader("token") String idToken, @PathVariable("uid") String SubscriptionUID) {
+        if (Boolean.TRUE.equals(checker.checkUsers(idToken))) {
+            return service.getByUidDto(SubscriptionUID);
+        } else {
+            SubscriptionDTO empty = new SubscriptionDTO();
+            empty.setDescription("Wrong token");
+            return empty;
+        }
+
     }
 
     /*DELETE*/
@@ -45,16 +51,15 @@ public class SubscriptionController {
         service.remove(id);
     }
 
-    @RequestMapping(value = "/savesubscription", method = RequestMethod.POST)
+    @RequestMapping(value = "/newsubscription", method = RequestMethod.POST)
     @ResponseBody
-    public void saveSubscription(@RequestBody Subscription Subscription) {
-        service.save(Subscription);
-    }
+    public void saveSubscription(/*@RequestHeader("token") String idToken,*/ @RequestBody incomeSubscriptionDTO subscription) {
+        /*if (Boolean.TRUE.equals(checker.checkUsers(idToken))) {
 
-    @RequestMapping(value = "/insertsubscription", method = RequestMethod.POST)
-    @ResponseBody
-    public void createSubscription() {
-        service.insertNew();
+        } else {
+
+        }*/
+        service.save(subscription);
     }
 
 

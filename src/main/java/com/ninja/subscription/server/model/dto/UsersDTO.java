@@ -1,7 +1,7 @@
 package com.ninja.subscription.server.model.dto;
 
 public class UsersDTO  implements Comparable<UsersDTO>{
-    String uid, email;
+    String uid, email, displayedName;
     Boolean claim;
 
     public String getUid() {
@@ -26,6 +26,14 @@ public class UsersDTO  implements Comparable<UsersDTO>{
 
     public void setClaim(Boolean claim) {
         this.claim = claim;
+    }
+
+    public String getDisplayedName() {
+        return displayedName;
+    }
+
+    public void setDisplayedName(String displayedName) {
+        this.displayedName = displayedName;
     }
 
     @Override

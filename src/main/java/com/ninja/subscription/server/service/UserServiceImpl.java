@@ -2,6 +2,7 @@ package com.ninja.subscription.server.service;
 
 import com.ninja.subscription.server.controller.UserController;
 import com.ninja.subscription.server.model.FirebaseUsers;
+import com.ninja.subscription.server.model.Price;
 import com.ninja.subscription.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,11 +30,21 @@ public class UserServiceImpl implements UserService {
         return temp;
     }
 
+    @Override
+    public boolean checkUser(String uid) {
+        return false;
+    }
 
     @Override
     public FirebaseUsers newUser(FirebaseUsers newUser) {
         log.info(" New user inserted for " + newUser.getUid() + ": " + new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
-            return userRepository.saveAndFlush(newUser);
+        userRepository.saveAndFlush(newUser);
+        FirebaseUsers tmp=getByEmail(newUser.getEmail());
+        return tmp;
+    }
+    @Override
+    public FirebaseUsers getOne (long id) {
+        return userRepository.findOne(id);
     }
 
 
