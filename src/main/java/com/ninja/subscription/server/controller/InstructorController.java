@@ -9,10 +9,13 @@ import com.ninja.subscription.server.service.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
-public class InstructorController {
+public class InstructorController extends ControllerUtils {
     IdentityProvider checker = new FirebaseProvider();
 
     @Autowired
@@ -45,8 +48,11 @@ public class InstructorController {
     @ResponseBody
     public InstructorDTO getInstructor(@RequestHeader("token") String idToken, @PathVariable("uid") String InstructorUID) {
         if (Boolean.TRUE.equals(checker.checkUsers(idToken))) {
+            log.info(" Correct token: "+ new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
+
             return service.getByUidDto(InstructorUID);
         }else {
+            log.warning(" Wrong token: "+ new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
             InstructorDTO empty = new InstructorDTO();
             empty.setName("Wrong token");
             return empty;

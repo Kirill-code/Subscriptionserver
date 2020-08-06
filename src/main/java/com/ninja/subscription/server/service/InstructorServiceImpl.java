@@ -75,7 +75,10 @@ public class InstructorServiceImpl implements InstructorService {
                 response.setName(requested.getName());
                 response.setSurname(requested.getSurname());
                 response.setUid(requested.getUid());
-            }else {
+            log.info("Instructor requested "+requested.getId()+" response - "+response.getId());
+
+        }else {
+            log.warning("Instructor doesn't exist");
             response.setName("Instructor doesn't exist");
         }
         return response;

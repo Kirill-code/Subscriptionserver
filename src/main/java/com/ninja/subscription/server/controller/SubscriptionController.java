@@ -10,12 +10,14 @@ import com.ninja.subscription.server.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
 import java.util.logging.Logger;
 
 @RestController
-public class SubscriptionController {
+public class SubscriptionController extends ControllerUtils {
 
     @Autowired
     private SubscriptionService service;
@@ -35,8 +37,10 @@ public class SubscriptionController {
     @ResponseBody
     public SubscriptionDTO getSubscriptioner(@RequestHeader("token") String idToken, @PathVariable("uid") String SubscriptionUID) {
         if (Boolean.TRUE.equals(checker.checkUsers(idToken))) {
+            log.info(" Correct token: "+ new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
             return service.getByUidDto(SubscriptionUID);
         } else {
+            log.warning(" Wrong token: "+ new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
             SubscriptionDTO empty = new SubscriptionDTO();
             empty.setDescription("Wrong token");
             return empty;

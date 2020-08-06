@@ -83,7 +83,7 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public List<GroupedVisitDatesDTO> visitsByDate(long instr_id, Date dateStart, Date dateEnd) {
-        log.info(" Visits sent for "+instr_id+": " + new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
+        log.info(" Service - Visits sent for "+instr_id+": " + new SimpleDateFormat("yyyy.MM.dd HH:mm ").format(new Date()));
         return visitRepository.visitsByDate(instr_id,dateStart,dateEnd);
     }
 }

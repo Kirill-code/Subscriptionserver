@@ -38,9 +38,12 @@ public class VisitController {
 
     @RequestMapping(value = "/visitsbydate", method = RequestMethod.GET)
     @ResponseBody
-    public List<GroupedVisitDatesDTO> visitsbydate(@RequestHeader("instid") long instr_id , @RequestHeader("dateStart") String dateStart, @RequestHeader("dateEnd") String dateEnd) {
+    public List<GroupedVisitDatesDTO> visitsbydate(@RequestHeader("instid") long instr_id ,
+                                                    @RequestHeader("dateStart") String dateStart,
+                                                    @RequestHeader("dateEnd") String dateEnd) {
        List<GroupedVisitDatesDTO> result;
        try{
+           log.info(" Controller - Visit created for : "+instr_id +" "+ dateStart+" - "+dateEnd);
            Date convertedStart=new SimpleDateFormat("yyyy-MM-dd").parse(dateStart);
            Date convertedEnd=new SimpleDateFormat("yyyy-MM-dd").parse(dateEnd);
 
